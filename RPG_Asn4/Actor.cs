@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     public abstract class Actor : IDamageable
     {

@@ -8,24 +8,41 @@
             Console.WriteLine("Welcome to the RPG Game!");
         }
 
-        public static void TopMenu()
+        public static void ShowMenuChoices(string[] choices)
         {
-            Console.WriteLine("1. Create Character");
-            Console.WriteLine("2. Load Character");
-            Console.WriteLine("3. Exit");
-            Console.Write("Please select an option: ");
+            Console.WriteLine();
+            for (int i = 0; i < choices.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {choices[i]}");
+            }
+        }
+                
+        public static void List(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(input);
+            Console.ResetColor();
         }
 
         public static void Igm(string input)  // Igm stands for "In Game Message"
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{input}");
+            Console.WriteLine(input);
             Console.ResetColor();
         }
-        //public static void NewGameMenu()
-        //{
-        //    Console.WriteLine("Starting a new game...");
-        //    // Additional logic for starting a new game can be added here
-        //}
+
+        public static void ShowPlayerInfo(Player player)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Player Name: {player.Name}, Health: {player.Health}");
+            Console.ResetColor();
+        }
+
+        public static void Error(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error: {message}");
+            Console.ResetColor();
+        }
     }
 }
