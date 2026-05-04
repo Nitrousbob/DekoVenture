@@ -73,8 +73,10 @@ namespace RPG_Asn4
             //make a couple Npcs to interact with in the starting area
             List<IInteractable> startNpcs = new List<IInteractable>
             {
-                new Npc("Old Man", 10),
-                new Npc("Merchant", 5)
+                Npc.GetStandardTier1(),
+                Npc.GetStandardTier1()
+                //new Npc("Old Man", 10),
+                //new Npc("Merchant", 5)
             };
             //Initialize the starting scene
             Scene startArea = new Scene(

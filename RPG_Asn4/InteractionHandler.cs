@@ -22,7 +22,7 @@
                 }
                 int exitOption = targets.Count + 1;
                 Display.Igm($"{exitOption}. Back to Main Menu.");
-                int choice = TakeInput.PromptIntRange("Select an option to interact with: ", 1, exitOption);
+                int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
 
                 if (choice == exitOption)
                 {
