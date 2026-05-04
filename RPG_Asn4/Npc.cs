@@ -9,7 +9,22 @@
 
         public void OnInteract()
         {
-            Display.Igm($"\n{Name} says: 'Hello'.");
+            String[] NpcTownsfolkGreeting =  
+            {
+                "Lovely weather we're having, isn't it?",
+                "Have you heard the latest gossip from the market?",
+                "I remember when this town was just a small village.",
+                "The harvest has been bountiful this year.",
+                "Be careful out there, the woods can be dangerous.",
+                "I heard there's a new shop opening up soon.",
+                "The old mill is said to be haunted at night.",
+                "Have you tried the baker's new pastry? It's delicious!",
+                "The festival is coming up, it's always a good time.",
+                "I wish I could travel, but I'm too old for that now."
+            };
+           
+            int index = Random.Shared.Next(NpcTownsfolkGreeting.Length);
+            Display.Igm($"\n{Name} says: '{NpcTownsfolkGreeting[index]}'");
         }
 
         public static string RandomNpcName()
