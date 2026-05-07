@@ -2,6 +2,26 @@
 
 namespace RPG_Asn4
 {
+
+    //quick architecture styling 
+    //Game owns:
+    // - player
+    // - current scene
+    // - overall state
+
+    // Scene owns:
+    // - description
+    // - list of interactable things in this location
+
+    // InteractionHandler does:
+    // - show list
+    // - select target
+    // - start interaction with selected target
+
+    // Npc/Dialog system owns:
+    // - talking to that selected NPC
+    // - parser loop for typed verbs
+
     public class Game
     {
         public enum GameState
@@ -68,22 +88,30 @@ namespace RPG_Asn4
 
         public void PlayGame()
         {
+            if (player == null)
+            {
+                Display.Error("You must create or load a character before you start.");
+                currentState = GameState.MainMenu;
+                return;
+            }
+
             Display.Igm("\n--- Entering Game World ---");
 
-            //make a couple Npcs to interact with in the starting area
-            List<IInteractable> startNpcs = new List<IInteractable>
+            //make a list to hold the nps in the scene
+            List<IInteractable> startNpcs = new List<IInteractable>();
+            
+            //Add a couple of npc's to the list
+            for (int i = 0; i < 2; i++)
             {
-                Npc.GetStandardTier1(),
-                Npc.GetStandardTier1()
-                //new Npc("Old Man", 10),
-                //new Npc("Merchant", 5)
-            };
+                startNpcs.Add(HumanNpcFactory.GetStandardTier(1));
+            }
+            
             //Initialize the starting scene
             Scene startArea = new Scene(
                 "\nYou find yourself in a small clearing surrounded by dense forest.",
                 startNpcs
             );
-            startArea.Describe();
+            startArea.Describe(player);
 
             // For now, we return to the main menu after the scene is done.
             currentState = GameState.MainMenu;

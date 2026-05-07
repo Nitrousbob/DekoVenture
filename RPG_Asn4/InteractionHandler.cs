@@ -2,7 +2,7 @@
 {
     public static class InteractionHandler
     {
-        public static void InteractWith(List<IInteractable> targets)
+        public static void InteractWith(List<IInteractable> targets, Player player)
         {
             bool interacting = true;
 
@@ -31,7 +31,7 @@
                 }
                 else if (choice > 0 && choice <= targets.Count)
                 {
-                    targets[choice - 1].OnInteract();
+                    targets[choice - 1].OnInteract(player);
                 }
                 else
                 {

@@ -11,11 +11,10 @@
             Locals = locals ?? new List<IInteractable>();
         }
 
-        public void Describe()
+        public void Describe(Player player)
         {
             Display.Igm(Description);
-            InteractionHandler.InteractWith(Locals);
-            //InteractionHandler.HandleSelection(Locals);
+            InteractionHandler.InteractWith(Locals, player);
         }
 
         //define a starting scene with a description and some npcs to interact with

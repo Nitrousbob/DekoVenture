@@ -3,6 +3,6 @@
     public interface IInteractable
     {
         string Name { get; }
-        void OnInteract();
+        void OnInteract(Player player);
     }
 }

@@ -22,6 +22,15 @@ namespace RPG_Asn4
         //using this method for menu choices, i wrote this for another project but its useful for this one.
         public static int PromptIntInstant(string prompt, params int[] validChoices)
         {
+            //I added this if statement to allow for testing and coding in vs code, since Console.ReadKey doesn't
+            //work well in that environment. It will just fallback to the confirmed method if input is
+            //redirected.  I used chatGPT to help with this fix because i could not get the program to run.
+            if (Console.IsInputRedirected)  
+
+            {
+                return PromptIntConfirmed(prompt, validChoices);
+            }
+
             ConsoleKeyInfo keyInfo;
             int choice = -1;
             bool isValid = false;
