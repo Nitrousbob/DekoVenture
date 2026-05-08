@@ -4,7 +4,8 @@ using System.Text;
 
 namespace RPG_Asn4
 {
-    public delegate void Action(List<Token> tokens);
+    // original public delegate void Action(List<Token> tokens);
+    public delegate void Action(List<Token> tokens, ComContext context);
     internal class LookupTable : Dictionary<string, Action>
     {
         public LookupTable()

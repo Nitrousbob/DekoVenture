@@ -31,6 +31,13 @@
             Console.ResetColor();
         }
 
+        public static void Action(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(input);
+            Console.ResetColor();
+        }
+
         public static void ShowPlayerInfo(Player player)
         {
             Console.ForegroundColor = ConsoleColor.Green;

@@ -92,7 +92,8 @@ public static class HumanDialogFactory
                         try
                         {
                             Action action = lookupTable[verb.Value];
-                            action(ast);
+                            ComContext context = new ComContext(p, n);
+                            action(ast, context);
                             
                         }
                         catch (KeyNotFoundException)

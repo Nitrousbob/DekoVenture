@@ -5,27 +5,46 @@ using System.Xml.Linq;
 
 namespace RPG_Asn4
 {
+    //im starting to notice my Command class needs to know about the Context of the game for different commands.
     public class Command
     {
-        public void Look(List<Token> tokens, Npc n)
+        public void Look(List<Token> tokens, ComContext c)
         {
-            Console.WriteLine($"You look at {n.Name}");
-            string eyeBodyLanguage = HumanDialogFactory.NpcEyeBehavior(n);
-            Display.Igm($"\n'{eyeBodyLanguage}'");
+            if (c.CurrentTarget is Npc n)
+            {
+                Display.Action($"You look at {n.Name}");
+                string eyeBodyLanguage = HumanDialogFactory.NpcEyeBehavior(n);
+                Display.Igm($"'{eyeBodyLanguage}'");
+            }
+            else
+            {
+                Console.WriteLine("There is nothing to look at.");
+            }
         }
 
-        public void Pet(List<Token> tokens)
+        public void Pet(List<Token> tokens, ComContext c)
         {
-            Console.WriteLine("You pet the thing");
+            if (c.CurrentTarget is Npc n)
+            {
+                Console.WriteLine($"You pet {n.Name}");
+            }
+            //if (c.CurrentTarget is Npc n)
+            //{
+            //    Display.Action($"You pet {n.Name}");
+            //    string petResponse = HumanDialogFactory.NpcPetResponse(n);
+            //    Display.Igm($"'{petResponse}'");
+            //}
+            //else
+
         }
 
-        public void Help(List<Token> tokens)
+        public void Help(List<Token> tokens, ComContext c)
         {
             Console.WriteLine("Available commands: ");
             Console.WriteLine("pet, look, help, exit, quit, bye");
         }
 
-        public void Exit(List<Token> tokens)
+        public void Exit(List<Token> tokens, ComContext c)
         {
             Console.WriteLine("Exiting the program...");
             Environment.Exit(0);
