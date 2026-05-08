@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace RPG_Asn4
 {
     public class Command
     {
-        Npc n;
-        public void Look(List<Token> tokens, Enum type)
+        public void Look(List<Token> tokens, Npc n)
         {
-            if (type == n.type.Humanoid)
-            {
-                Console.WriteLine($"You look at {n.Name}");
-            }
+            Console.WriteLine($"You look at {n.Name}");
+            string eyeBodyLanguage = HumanDialogFactory.NpcEyeBehavior(n);
+            Display.Igm($"\n'{eyeBodyLanguage}'");
         }
 
         public void Pet(List<Token> tokens)

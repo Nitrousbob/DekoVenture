@@ -9,18 +9,6 @@ namespace RPG_Asn4
     {
         private static readonly Random _rng = new Random();
 
-        //this is just a reference to an old project where I used to author Npc's,
-        // private static readonly Func<Npc>[] _tier1Normal =
-        // {
-        //     //this holds recipes for enemies but doesnt cook them yet.
-        //     () => new Npc("Thistlefolk Ambusher", 10),
-        //     () => new Npc("Moss Crawler",5),
-        //     () => new Npc("Ancient Skeleton",12),
-        //     () => new Npc("Giant Rat", 14),
-        //     () => new Npc("Bladed Guard",10)
-
-        // };
-
         public static string RandomNpcName()
         {
             //in luei of authored bosses for now NPC names generated with ChatGpt.
@@ -40,15 +28,20 @@ namespace RPG_Asn4
         }
 
         //recipe list for Npc's
-        private static readonly Func<Npc>[] _tier1Townsfolk =   
+        private static readonly Func<Npc>[] _tier1Townsfolk =
         {
-            () => new Npc(RandomNpcName(), Random.Shared.Next(10, 15)),  //creates a new NPC with a random name and health between 10 and 15
+            () => new Npc(RandomNpcName(), Random.Shared.Next(10, 15), RollHasEyes(90)),
         };
 
         public static Npc GetStandardTier(int tier = 1)  
         {
             int index = Random.Shared.Next(_tier1Townsfolk.Length);
             return _tier1Townsfolk[index]();
+        }
+
+        private static bool RollHasEyes(int chanceEyes)
+        {
+            return Random.Shared.Next(100) < chanceEyes;
         }
     }
 }
