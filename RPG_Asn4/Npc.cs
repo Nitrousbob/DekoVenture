@@ -1,9 +1,9 @@
 ﻿namespace RPG_Asn4
 {
-    public class Npc : Actor, IInspectable
+    public class Npc : Actor, IInspectable, ITalkable, IQuestionable
     {
         public bool HasEyes { get; private set; }
-        public int GreetingCount { get; set; } = 0; // This property will track how many times the NPC has greeted the player.
+        public int InteractionCount { get; set; } = 0; // This property will track how many times the NPC has greeted the player.
         public Npc(string name, int health, bool hasEyes) : base(name, health)
         {
             HasEyes = hasEyes;
@@ -16,23 +16,36 @@
         
         public override void OnInteract(Player player)
         {
-            if (canInteract && GreetingCount < 5)
+            if (!canInteract)
             {
-                string greeting = HumanDialogFactory.GetRandomGreeting(this);
-                Display.Igm($"\n{Name} says: '{greeting}'");
-                GreetingCount++;
-                
-                HumanDialogFactory.Dialogger(this, player);  //Enters the dialog
+                Display.Igm($"{Name} does not want to interact with you right now.");
+                return;
             }
-            else if (GreetingCount >= 5 && GreetingCount < 10)  //checks canInteract and if the npc has greeted the player 5 times
+            
+            string greeting = HumanDialogFactory.GetRandomGreeting(this);
+            Display.Igm($"\n{Name} says: '{greeting}'");
+            
+            HumanDialogFactory.Dialogger(this, player);  //Enters the dialog
+        }
+
+        public string GetTalkResponse()
+        {
+            InteractionCount++;
+            if (InteractionCount < 5)
             {
-                Display.Igm($"{Name} has greeted you enough times. Maybe try talking to them later.");
+                return "I came here to chew bubblegum and talk, and I'm all out of bubblegum.";
             }
             else
             {
-                Display.Igm($"{Name} does not want to interact with you right now.");
+                return "I'm all out of responses now too";
             }
+
+            
         }
-                
+
+        public string GetQuestionResponse()
+        {
+            return "I'm afraid my responses are limited, you must ask the right question.";
+        }
     }
 }

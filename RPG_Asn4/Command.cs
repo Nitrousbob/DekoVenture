@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     //im starting to notice my Command class needs to know about the Context of the game for different commands.
     public class Command
@@ -27,13 +22,39 @@ namespace RPG_Asn4
                 Console.WriteLine("There is nothing to look at.");
             }
         }
+        public void Talk(List<Token> tokens, ComContext c)
+        {
+            if (c.CurrentTarget is ITalkable talkable)
+            {
+                Display.Action($"You talk to {talkable.Name}");
+                Display.Igm(talkable.GetTalkResponse());
+            }
+            else
+                {
+                    Display.Igm($"{c.CurrentTarget.Name} doesn't seem to be able to talk.");
+                }
+        }
+
+        public void Ask(List<Token> tokens, ComContext c)
+        {
+            if (c.CurrentTarget is IQuestionable questionable)
+            {
+                Display.Action($"You ask {questionable.Name} a question.");
+                Display.Igm(questionable.GetQuestionResponse());
+            }
+            else
+            {
+                Display.Igm($"{c.CurrentTarget} doesn't seem to be able to answer questions.");
+            }
+        }
+
 
         public void Pet(List<Token> tokens, ComContext c)
         {
             if (c.CurrentTarget is IPettable pettable)
             {
                 Display.Action($"You pet {pettable.Name}");
-                //Display.Igm(pettable.getPetResponse);
+                Display.Igm(pettable.GetPetResponse());
             }
             else if (c.CurrentTarget is Npc n)
             {
@@ -44,7 +65,7 @@ namespace RPG_Asn4
             {
                 Display.Igm("Very unusual, that's not something you can pet.");
             }
-              
+
         }
 
         public void Slap(List<Token> tokens, ComContext c)
@@ -66,7 +87,8 @@ namespace RPG_Asn4
         public void Help(List<Token> tokens, ComContext c)
         {
             Display.Action("Available commands: ");
-            Display.Bright("pet, look, help, exit, quit, bye, hit, slap");
+            Display.Bright("pet, look, help, exit, quit, bye, hit, slap, talk");
+            //can the list for actions build up from a dictionary and display available options?
         }
 
         public void Exit(List<Token> tokens, ComContext c)

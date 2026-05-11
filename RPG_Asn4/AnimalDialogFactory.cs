@@ -11,13 +11,13 @@ namespace RPG_Asn4
         {
             string[] noises =
             {
-                "A low growl rolls through the darkness.",
-                "Something chitters from inside the walls.",
-                "A wet snarl echoes nearby.",
+                "A low growl that rolls through the darkness.",
+                "A chittering from inside the walls of its voice box.",
+                "A wet snarl.",
                 "Claws scrape slowly across stone.",
-                "A distant howl rises, then cuts off suddenly.",
-                "Something breathes heavily just out of sight.",
-                "A sharp screech tears through the silence.",
+                "A distant howl, then cuts off suddenly.",
+                "breathes heavy.",
+                "A sharp screech that tears through the silence.",
                 "Tiny feet skitter across the floor.",
                 "A beast lets out a broken, rasping cry.",
                 "Wings flap overhead, but you see nothing.",
@@ -31,16 +31,16 @@ namespace RPG_Asn4
                 "A shrill cry echoes, almost like laughter.",
                 "Something drags its claws across wood.",
                 "A pack of unseen creatures yips in the distance.",
-                "A hollow hoot sounds from above.",
-                "A beast exhales with a rattling wheeze.",
-                "Something splashes in unseen water.",
-                "A raspy caw echoes between the trees.",
-                "A soft whimper comes from somewhere nearby.",
-                "A sudden snort breaks the silence.",
-                "Something lets out a clicking, insect-like trill.",
-                "A deep croak bubbles from the darkness.",
-                "A creature snarls, then goes completely quiet.",
-                "A strange animal cry echoes like a warning."
+                "a hollow hoot.",
+                "a rattling wheeze.",
+                "a splashing watery sound.",
+                "a raspy caw echoes between the trees.",
+                "a soft whimper comes from somewhere nearby.",
+                "a sudden snort breaks the silence.",
+                "a clicking, insect-like trill.",
+                "a deep croak that bubbles from the darkness.",
+                "a snarls, then goes completely quiet.",
+                "a strange animal cry that echoes like a warning."
                 };
 
             int index = Random.Shared.Next(noises.Length);

@@ -24,15 +24,14 @@
 
         public override void OnInteract(Player player)
         {
-            if (canInteract)
+            if (!canInteract)
             {
-                Display.Igm($"\n{Name} makes: '{AnimalDialogFactory.GetRandomAnimalNoise()}'");  //goofy because its random
-                AnimalDialogFactory.Dialogger(this, player);  //Enters the dialog
+            Display.Igm($"{Name} signals that this is not a game.");
+            return;
             }
-            else
-            {
-                Display.Igm($"{Name} signals that this is not a game.");
-            }
+                             
+            Display.Igm($"\n{Name} makes {AnimalDialogFactory.GetRandomAnimalNoise()}");  //goofy because its random
+            AnimalDialogFactory.Dialogger(this, player);  //Enters the dialog
         }
     }
 }

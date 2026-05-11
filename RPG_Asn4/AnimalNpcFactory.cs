@@ -60,9 +60,7 @@
             return AnimalSpecies[index];
         }
 
-
-
-        //recipe list for Npc's
+        //recipe list for AnimalNpc's
         private static readonly Func<Animal>[] _tier1Animal =
         {
             () => new Animal(RandomAnimalName(), Random.Shared.Next(5, 7), RandomAnimalSpecies(), true)

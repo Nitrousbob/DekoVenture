@@ -2,12 +2,14 @@
 {
     public class ComContext
     {
-        public Player player { get; }
+        public Player Player { get; }
         public IInteractable? CurrentTarget { get; }
+        public bool EndInteration { get; set; } = false;
+        //this will allow the interaction to end immediately if it has to in the case of an attack
 
         public ComContext(Player player, IInteractable? currentTarget)
         {
-            this.player = player;
+            this.Player = player;
             this.CurrentTarget = currentTarget;
         }
     }

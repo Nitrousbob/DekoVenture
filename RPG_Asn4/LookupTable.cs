@@ -19,6 +19,8 @@ namespace RPG_Asn4
         public LookupTable()
         {
             Command c = new Command();
+            Add("ask", c.Ask);
+            Add("talk", c.Talk);
             Add("pet", c.Pet);
             Add("slap", c.Slap);
             Add("hit", c.Slap);
