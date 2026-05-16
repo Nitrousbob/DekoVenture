@@ -1,6 +1,6 @@
 ﻿namespace RPG_Asn4
 {
-    public class Animal : Actor, IInspectable, IPettable
+    public class Animal : Actor, IInspectable, IPettable, IReactable
     {
         public string Species { get; private set; }
         public bool HasEyes { get; private set; }
@@ -44,6 +44,30 @@
             CurrentPlayer = player;
             StateMachine.ChangeState(InteractingState);
             StateMachine.Update();
+        }
+
+        public void OnSlapped()
+        {
+                Display.Action($"You slap {Name}");
+                Display.DarkAction($"{Name} looks at you with shock and anger.");
+                BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+        }
+
+        public void OnLaughedAt()
+        {
+            Display.Action($"You laugh at {Name}");
+            Display.DarkAction($"{Name} tilts its head, confused by the noise.");
+        }
+
+        public void OnFlirtedWith()
+        {
+            Display.Action($"You try to flirt with {Name}");
+            Display.DarkAction($"{Name} ignores you completely.");
+        }
+
+        public void OnFartedAt()
+        {
+            //nothing happens
         }
     }
 }

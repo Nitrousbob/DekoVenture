@@ -68,19 +68,10 @@
 
         public void Slap(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is Npc npc)
+            if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You slap {npc.Name}");
-                Display.DarkAction($"{npc.Name} looks at you with shock and anger.");
-                npc.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
-                //remove interactable from npc while they are slapped, then add them back after a few turns to simulate them being mad at you for a while.
-                //this was put into the Animals and Npcs OnInteract method, so they will stop interacting with you for a few turns after being slapped.
-            }
-            else if (c.CurrentTarget is Animal animal)
-            {
-                Display.Action($"You slap {animal.Name}");
-                Display.DarkAction($"{animal.Name} looks at you with shock and anger.");
-                animal.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+                //Display.Action($"You slap {reactable.Name}");
+                reactable.OnSlapped();     
             }
             else
             {
@@ -90,15 +81,9 @@
 
         public void Laugh(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is Npc npc)
+            if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You laugh at {npc.Name}");
-                Display.DarkAction($"{npc.Name} laughs back at you.");
-            }
-            else if (c.CurrentTarget is Animal animal)
-            {
-                Display.Action($"You laugh at {animal.Name}");
-                Display.DarkAction($"{animal.Name} tilts its head, confused by the noise.");
+                reactable.OnLaughedAt();
             }
             else
             {
@@ -108,16 +93,9 @@
 
         public void Flirt(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is IInteractable interactable)
+            if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You flirt with {interactable.Name}");
-                Display.DarkAction($"{interactable.Name} blushes and looks away.");
-                //TODO maybe need to add a mood property or enum
-            }
-            else if (c.CurrentTarget is Animal animal)
-            {
-                Display.Action($"You try to flirt with {animal.Name}");
-                Display.DarkAction($"{animal.Name} ignores you completely.");
+                reactable.OnFlirtedWith();
             }
             else
             {
@@ -127,30 +105,16 @@
 
         public void Fart(List<Token> tokens, ComContext c)
         {
-            if(c.CurrentTarget is IInteractable interactable)
+            if(c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You break wind in their general direction");
-
-                int choice = Random.Shared.Next(3);
-                switch (choice)
-                {
-                    case 0:
-                        Display.DarkAction($"{interactable.Name} laughs at your display of bodily function.");
-                        break;
-                    case 1:
-                        Display.DarkAction($"{interactable.Name} is not amused.");
-                        break;
-                    case 2:
-                        Display.DarkAction($"{interactable.Name} fires back with their own brand of flatulence");
-                        break;
-                }
+                reactable.OnFartedAt();
             }
         }
 
         public void Help(List<Token> tokens, ComContext c)
         {
             Display.Action("Available commands: ");
-            Display.Bright("pet, look, help, exit, quit, bye, hit, slap, talk, laugh, flirt, fart");
+            Display.Bright("pet, look, hit, slap, talk, laugh, flirt, fart, help, exit, quit, bye, leave");
             //can the list for actions build up from a dictionary and display available options?
         }
 

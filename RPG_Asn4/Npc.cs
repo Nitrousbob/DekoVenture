@@ -1,6 +1,6 @@
 ﻿namespace RPG_Asn4
 {
-    public class Npc : Actor, IInspectable, ITalkable, IQuestionable
+    public class Npc : Actor, IInspectable, ITalkable, IQuestionable, IReactable
     {
         public Player? CurrentPlayer { get; set; }
         public NpcIdleState IdleState { get; private set; }
@@ -74,5 +74,43 @@
             StateMachine.ChangeState(TalkingState);
         }
 
+        public void OnSlapped()
+        {
+            Display.Action($"You slap {Name}");
+            Display.DarkAction($"{Name} looks at you with shock and anger.");
+            BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+        }
+
+        public void OnLaughedAt()
+        {
+            Display.Action($"You laugh at {Name}");
+            Display.DarkAction($"{Name} laughs back at you.");
+        }
+
+        public void OnFlirtedWith()
+        {
+            Display.Action($"You flirt with {Name}");
+            Display.DarkAction($"{Name} blushes and looks away.");
+
+        }
+
+        public void OnFartedAt()
+        {
+            Display.Action($"You break wind in their general direction");
+
+                int choice = Random.Shared.Next(3);
+                switch (choice)
+                {
+                    case 0:
+                        Display.DarkAction($"{Name} laughs at your display of bodily function.");
+                        break;
+                    case 1:
+                        Display.DarkAction($"{Name} is not amused.");
+                        break;
+                    case 2:
+                        Display.DarkAction($"{Name} fires back with their own brand of flatulence");
+                        break;
+                }
+        }
     }
 }
