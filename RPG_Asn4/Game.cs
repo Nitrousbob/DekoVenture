@@ -33,6 +33,8 @@ namespace RPG_Asn4
         
         public static Game? CurrentGame { get; private set; }
         public Scene? CurrentScene { get; private set; }
+        //may need to start scaffolding Area/Room/County/City etc  Holodeck? plot device to be an area to generate a clue
+
         public ColorMode CurrentMode { get; set; } = ColorMode.FullColor;
 
         private GameState currentState;

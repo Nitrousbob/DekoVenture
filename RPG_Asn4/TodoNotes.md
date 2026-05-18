@@ -29,5 +29,14 @@
 
  ## implement a trap system, poison, physical, magical, etc. The player should be able to detect and disarm traps, or suffer the consequences if they fail.
 
- ##implement bleeding, poison, and other status effects that can affect the player and NPCs during combat. This will add more depth and strategy to the combat system, as players will need to manage their health and status effects carefully in order to succeed.
+ ## implement bleeding, poison, and other status effects that can affect the player and NPCs during combat. This will add more depth and strategy to the combat system, as players will need to manage their health and status effects carefully in order to succeed.
  //this can also be used in the environment and with beasts, such as a poisonous plant or a bleeding wound that needs to be treated.
+
+ ## Rooms
+ <!-- treasure
+ traps
+ npcs - enemies, other folks List<Npc>
+ items - interactable windows, plants desks portals
+ string description
+ exits
+ Player? player (nullable) -->
