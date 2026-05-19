@@ -20,16 +20,16 @@
 
     public class Scene
     {
+        public string Name { get; set; }
         public string Description { get; set; }
-        public List<IInteractable> Locals { get; set; }
-
+        public Location CurrentLocation { get; set; }
         public Weather CurrentWeather {get; private set;}
         public TimeOfDay CurrentTime {get; private set;}
         private int turnsToTimeChange;
-        public Scene(string description, List<IInteractable> locals)
+        public Scene(string name, Location startingLocation)
         {
-            Description = description;
-            Locals = locals ?? new List<IInteractable>();
+            Name = name;
+            CurrentLocation = startingLocation;
             CurrentWeather = Weather.Clear;
             CurrentTime = TimeOfDay.Morning;
             turnsToTimeChange = 4;  //takes 4 interaction turns to advance the time of day
@@ -38,8 +38,8 @@
         public string? TickTurn()
         {
             string? environmentMessage = UpdateTimeAndWeather();
-
-            foreach(IInteractable local in Locals)
+            //local is not a wide enough catch for what could be there.
+            foreach(IInteractable local in CurrentLocation.Interactables)
             {
                 local.TickInteractionCooldown();
 
@@ -53,13 +53,13 @@
 
         public bool Describe(Player player)
         {
-            Display.Igm(Description);  //Describe the scene
+            Display.Igm($"{CurrentLocation.Name}");
             string? envMessage = TickTurn();  //bring the world alive
             if (!string.IsNullOrEmpty(envMessage))
             {
                 Display.Igm(envMessage);
             }
-            return InteractionHandler.InteractWith(Locals, player);
+            return InteractionHandler.InteractWith(this, player);
         }
 
         private string? UpdateTimeAndWeather()

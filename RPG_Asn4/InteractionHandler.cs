@@ -2,16 +2,14 @@
 {
     public static class InteractionHandler
     {
-        public static bool InteractWith(List<IInteractable> targets, Player player)
+        public static bool InteractWith(Scene scene, Player player)
         {
-            
-            if (targets.Count == 0)  
-            {
-                Display.Igm("There is nothing to interact with.");
-                return true;
-            }
+            var targets = scene.CurrentLocation.Interactables;
+            var exits = scene.CurrentLocation.Exits.ToList();
 
             Display.Igm("You see the following:");
+
+            int optionNumber = 1;
 
             for (int i = 0; i < targets.Count; i++)
             {
@@ -21,11 +19,19 @@
                 {
                     stateLabel = $" ({actor.StateMachine.CurrentState.Name})";
                 }
-                Display.List($"{i + 1}. {targets[i].Name}{stateLabel}");
+                Display.List($"{optionNumber}. {targets[i].Name}{stateLabel}");
+                optionNumber++;
             }
 
-            int waitOption = targets.Count + 1;  //this adds a wait option to let an npc finish their state before they are ready to interact
-            int exitOption = targets.Count + 2; // this adds the number of targets + 2 to the list of available selections
+            // List all available Exits dynamically
+            for (int i = 0; i < exits.Count; i++)
+            {
+                Display.List($"{optionNumber}. Go {exits[i].Key} to {exits[i].Value.Name}");
+                optionNumber++;
+            }
+
+            int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
+            int exitOption = optionNumber; //  adds the final selection
             Display.Igm($"{waitOption}. Wait a moment.");
             Display.Igm($"{exitOption}. Back to Main Menu.");
             int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
@@ -40,9 +46,17 @@
                 Display.Igm("You stand quietly, watching the area.");
                 return true;
             }
-            else if (choice > 0 && choice <= targets.Count)
+            else if (choice <= targets.Count)
             {
                 targets[choice - 1].OnInteract(player);
+                return true;
+            }
+            else if (choice <= targets.Count + exits.Count) // They picked an Exit
+            {
+                int exitIndex = choice - 1 - targets.Count;
+                var selectedExit = exits[exitIndex];
+                Display.Action($"\nYou travel {selectedExit.Key}...");
+                scene.CurrentLocation = selectedExit.Value; // MOVEMENT HAPPENS HERE!
                 return true;
             }
             else
