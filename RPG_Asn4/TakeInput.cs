@@ -10,7 +10,7 @@
                 {
                     return choice;
                 }
-                Console.WriteLine("Invalid input. Please enter a number: ");
+                UI.ShowError("Invalid input. Please enter a number: ");
             }
         }
 
@@ -34,19 +34,19 @@
 
             do
             {
-                Console.WriteLine(prompt);
+                UI.ShowText(prompt);
                 keyInfo = Console.ReadKey(true); //true hides the key press then we check if its valid
                 if (int.TryParse(keyInfo.KeyChar.ToString(), out choice))
                 {
                     if (validChoices.Contains(choice))
                     {
                         isValid = true;
-                        Console.WriteLine(keyInfo.KeyChar);  //display keypress after we know it was valid
+                        UI.ShowText(keyInfo.KeyChar.ToString());  //display keypress after we know it was valid
                     }
                 }
                 if (!isValid)
                 {
-                    Display.Error("Invalid selection.");
+                    UI.ShowError("Invalid selection.");
                 }
             } while (!isValid);
             return choice;
@@ -67,7 +67,7 @@
         {
             while (true)
             {
-                Console.WriteLine(prompt + " ");
+                UI.ShowText(prompt + " ");
 
                 if (int.TryParse(Console.ReadLine(), out int value))
                 {
@@ -78,13 +78,13 @@
                     else
                     {
                         string validOptions = string.Join(", ", validChoices);
-                        Display.Error($"Please select an option like: {validOptions}");
+                        UI.ShowError($"Please select an option like: {validOptions}");
                     }
                 }
                 else
                 {
                     //displays mostly when empty input, or space
-                    Display.Error("Unavailable choice. Try choosing better.");
+                    UI.ShowError("Unavailable choice. Try choosing better.");
                 }
             }
         }
@@ -93,7 +93,7 @@
         {
             while (true)
             {
-                Console.WriteLine(prompt);
+                UI.ShowText(prompt);
                 if (int.TryParse(Console.ReadLine(), out int value))
                 {
                     if (value >= min && value <= max)
@@ -101,13 +101,13 @@
                         return value; // successful input
                     }
                 }
-                Display.Error($"Invalid input. Please enter a number between {min} and {max}.");
+                UI.ShowError($"Invalid input. Please enter a number between {min} and {max}.");
             }
         }
 
         public static string GetPlayerName()
         {
-            Display.Igm("Enter your character's name: ");
+            UI.Narrate("Enter your character's name: ");
             return Console.ReadLine() ?? "Unnamed Hero";
         }
 

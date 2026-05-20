@@ -18,7 +18,7 @@
         Night
     }
 
-    public class Scene
+    public class Zone
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -26,7 +26,7 @@
         public Weather CurrentWeather {get; private set;}
         public TimeOfDay CurrentTime {get; private set;}
         private int turnsToTimeChange;
-        public Scene(string name, Location startingLocation)
+        public Zone(string name, Location startingLocation)
         {
             Name = name;
             CurrentLocation = startingLocation;
@@ -53,11 +53,11 @@
 
         public bool Describe(Player player)
         {
-            Display.Igm($"{CurrentLocation.Name}");
+            UI.Narrate($"{CurrentLocation.Name}");
             string? envMessage = TickTurn();  //bring the world alive
             if (!string.IsNullOrEmpty(envMessage))
             {
-                Display.Igm(envMessage);
+                UI.Narrate(envMessage);
             }
             return InteractionHandler.InteractWith(this, player);
         }

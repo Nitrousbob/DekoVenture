@@ -37,13 +37,13 @@
         {
             if (!canInteract)
             {   //maybe there are moods or other factors that could cause an NPC to not want to interact with the player, this is where that logic would go.
-                Display.Igm($"{Name} does not want to interact with you right now.");
+                UI.Narrate($"{Name} does not want to interact with you right now.");
                 return;
             }
             
             if (StateMachine.CurrentState == BusyState)
             {
-                Display.Igm($"{Name} {BusyRefusal}");
+                UI.Narrate($"{Name} {BusyRefusal}");
                 return;
             }
 

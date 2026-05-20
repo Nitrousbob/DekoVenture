@@ -7,29 +7,29 @@
         {
             if (c.CurrentTarget is Animal a)
             {
-                Display.Action(a.GetDescription());
+                UI.ShowPlayerAction(a.GetDescription());
             }
             else if (c.CurrentTarget is Npc n)
             {
-                Display.Action(n.GetDescription());
+                UI.ShowPlayerAction(n.GetDescription());
                 string eyeBodyLanguage = DialogFactory.NpcEyeBehavior(n);
-                Display.Igm($"'{eyeBodyLanguage}'");
+                UI.Narrate($"'{eyeBodyLanguage}'");
             }
             else
             {
-                Console.WriteLine("There is nothing to look at.");
+                UI.Narrate("There is nothing to look at.");
             }
         }
         public void Talk(List<Token> tokens, ComContext c)
         {
             if (c.CurrentTarget is ITalkable talkable)
             {
-                Display.Action($"You talk to {talkable.Name}");
-                Display.Igm(talkable.GetTalkResponse());
+                UI.ShowPlayerAction($"You talk to {talkable.Name}");
+                UI.Narrate(talkable.GetTalkResponse());
             }
             else
                 {
-                    Display.Igm($"{c.CurrentTarget.Name} doesn't seem to be able to talk.");
+                    UI.Narrate($"{c.CurrentTarget.Name} doesn't seem to be able to talk.");
                 }
         }
 
@@ -37,12 +37,12 @@
         {
             if (c.CurrentTarget is IQuestionable questionable)
             {
-                Display.Action($"You ask {questionable.Name} a question.");
-                Display.Igm(questionable.GetQuestionResponse());
+                UI.ShowPlayerAction($"You ask {questionable.Name} a question.");
+                UI.Narrate(questionable.GetQuestionResponse());
             }
             else
             {
-                Display.Igm($"{c.CurrentTarget} doesn't seem to be able to answer questions.");
+                UI.Narrate($"{c.CurrentTarget} doesn't seem to be able to answer questions.");
             }
         }
 
@@ -51,17 +51,17 @@
         {
             if (c.CurrentTarget is IPettable pettable)
             {
-                Display.Action($"You pet {pettable.Name}");
-                Display.Igm(pettable.GetPetResponse());
+                UI.ShowPlayerAction($"You pet {pettable.Name}");
+                UI.Narrate(pettable.GetPetResponse());
             }
             else if (c.CurrentTarget is Npc n)
             {
-                Display.Action($"You try to pet {n.Name}");
-                Display.Igm($"{n.Name} doesn't seem to like that.");
+                UI.ShowPlayerAction($"You try to pet {n.Name}");
+                UI.Narrate($"{n.Name} doesn't seem to like that.");
             }
             else
             {
-                Display.Igm("Very unusual, that's not something you can pet.");
+                UI.Narrate("Very unusual, that's not something you can pet.");
             }
 
         }
@@ -70,13 +70,13 @@
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You slap {reactable.Name}");
+                UI.ShowPlayerAction($"You slap {reactable.Name}");
                 string reaction = reactable.OnAgitate();
-                Display.DarkAction(reaction);     
+                UI.ShowPlayerAction(reaction);     
             }
             else
             {
-                Display.Igm("That didn't just happen again!");  //enter combat state?
+                UI.Narrate("That didn't just happen again!");  //enter combat state?
             }
         }
 
@@ -84,13 +84,13 @@
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You laugh at {reactable.Name}");
+                UI.ShowPlayerAction($"You laugh at {reactable.Name}");
                 string reaction = reactable.OnLaughedAt();
-                Display.DarkAction(reaction);
+                UI.ShowPlayerAction(reaction);
             }
             else
             {
-                Display.Igm("There I go just laughing out loud again.");
+                UI.Narrate("There I go just laughing out loud again.");
             }
         }   
 
@@ -98,13 +98,13 @@
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You flirt with {reactable.Name}");
+                UI.ShowPlayerAction($"You flirt with {reactable.Name}");
                 string reaction = reactable.OnFlirtedWith();
-                Display.DarkAction(reaction);
+                UI.ShowPlayerAction(reaction);
             }
             else
             {
-                Display.Igm("You can't flirt with that. Im sure its flattered though");
+                UI.Narrate("You can't flirt with that. Im sure its flattered though");
             }
         }
 
@@ -112,22 +112,22 @@
         {
             if(c.CurrentTarget is IReactable reactable)
             {
-                Display.Action($"You break wind in their general direction");
+                UI.ShowPlayerAction($"You break wind in their general direction");
                 string reaction = reactable.OnFartedAt();
-                Display.DarkAction(reaction);
+                UI.ShowPlayerAction(reaction);
             }
         }
 
         public void Help(List<Token> tokens, ComContext c)
         {
-            Display.Action("Available commands: ");
-            Display.Bright("pet, look, hit, slap, talk, laugh, flirt, fart, help, exit, quit, bye, leave");
+            UI.ShowPlayerAction("Available commands: ");
+            UI.ShowPlayerAction("pet, look, hit, slap, talk, laugh, flirt, fart, help, exit, quit, bye, leave");
             //can the list for actions build up from a dictionary and display available options?
         }
 
         public void Exit(List<Token> tokens, ComContext c)
         {
-            Display.Igm("Ending conversation...");
+            UI.Narrate("Ending conversation...");
             c.EndInteration = true;
         }
     }

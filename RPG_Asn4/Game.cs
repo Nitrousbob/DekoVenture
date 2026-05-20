@@ -12,8 +12,7 @@ namespace RPG_Asn4
         }
         
         public static Game? CurrentGame { get; private set; }
-        public Scene? CurrentScene { get; private set; }
-        //may need to start scaffolding Area/Room/County/City etc  Holodeck? plot device to be an area to generate a clue
+        public Zone? CurrentZone { get; private set; }
         //this colormode was for getting the game class working with the clr class
         public ColorMode CurrentMode { get; set; } = ColorMode.FullColor;
         private GameState currentState;
@@ -29,7 +28,7 @@ namespace RPG_Asn4
 
         public void Run()
         {
-            Display.ShowWelcomeMessage();
+            UI.ShowWelcomeMessage();
             while (currentState != GameState.Exit)
             {
                 switch (currentState)
@@ -42,12 +41,12 @@ namespace RPG_Asn4
                         break;
                 }
             }
-            Display.Igm("Thanks for playing!");
+            UI.Narrate("Thanks for playing!");
         }
 
         private void ShowMainMenu()
         {
-            Display.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
+            UI.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
             switch (TakeInput.PromptIntRange("Please select an option: ", 1, 4))
             {
                 case 1:
@@ -63,7 +62,7 @@ namespace RPG_Asn4
                     }
                     else
                     {
-                        Display.Error("You must create or load a character before you start.");
+                        UI.ShowError("You must create or load a character before you start.");
                     }
                     break;
                 case 4:
@@ -76,19 +75,19 @@ namespace RPG_Asn4
         {
             if (player == null)  //quick check for a player
             {
-                Display.Error("You must create or load a character before you start.");
+                UI.ShowError("You must create or load a character before you start.");
                 currentState = GameState.MainMenu;
                 return;
             }
 
-            Display.Igm("--- Entering Game World ---");
+            UI.Narrate("--- Entering Game World ---");
 
-            CurrentScene = WorldBuilder.CreateStartingZone(); //create the starting scene and describe it
+            CurrentZone = WorldBuilder.CreateStartingZone(); //create the starting zone and describe it
             
             bool inWorld = true;
             while (inWorld)
             {
-                inWorld = CurrentScene.Describe(player);
+                inWorld = CurrentZone.Describe(player);
             }
 
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
@@ -102,7 +101,7 @@ namespace RPG_Asn4
             //check if a player with the same name already exists
             if (File.Exists(fileName))
             {
-                Display.Igm($"Player `{name}` already exists. Loading instead...");
+                UI.Narrate($"Player `{name}` already exists. Loading instead...");
                 LoadSpecificFile(fileName);
             }
             else
@@ -110,8 +109,8 @@ namespace RPG_Asn4
                 //Create and save
                 player = new Player(name, StartingHealth);
                 SavePlayer();
-                Display.Igm("Player created and saved successfully.");
-                Display.ShowPlayerInfo(player); //lets pass the player object to the display method to show the player's info after creation.
+                UI.Narrate("Player created and saved successfully.");
+                UI.ShowPlayerInfo(player); //lets pass the player object to the display method to show the player's info after creation.
             }
         }
 
@@ -121,16 +120,16 @@ namespace RPG_Asn4
             string[] files = Directory.GetFiles(path, "*.json").Where(file => !file.EndsWith(".deps.json") && !file.EndsWith(".runtimeconfig.json")).ToArray(); //This gets all the .json files in the directory, which should be the saved player files.
             if (files.Length == 0)  //If there are no .json files, it means there are no saved files to open
             {
-                Display.Error("No saved player data found.");
+                UI.ShowError("No saved player data found.");
                 return;
             }
 
-            Display.Igm($"{files.Length} available saved players: ");
+            UI.Narrate($"{files.Length} available saved players: ");
 
             for (int i = 0; i < files.Length; i++)
             {
 
-                Display.List($"{i + 1}. {Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
+                UI.ShowListItem($"{i + 1}. {Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
             }
 
             int choice = TakeInput.PromptIntRange("Enter the number of the player you want to load: ", 1, files.Length);
@@ -144,13 +143,13 @@ namespace RPG_Asn4
                     if (loadedPlayer != null)
                     {
                         player = loadedPlayer;
-                        Display.Igm($"Player loaded successfully");
-                        Display.ShowPlayerInfo(player); //This shows the loaded player's information after successful loading.
+                        UI.Narrate($"Player loaded successfully");
+                        UI.ShowPlayerInfo(player); //This shows the loaded player's information after successful loading.
                     }
                 }
                 catch (Exception e)
                 {
-                    Display.Error($"Error loading player data: {e.Message}");
+                    UI.ShowError($"Error loading player data: {e.Message}");
                 }
 
         }
@@ -164,14 +163,14 @@ namespace RPG_Asn4
                 if (loaded != null)
                 {
                     player = loaded;
-                    Display.Igm("Player loaded successfully.");
-                    Display.ShowPlayerInfo(player);
+                    UI.Narrate("Player loaded successfully.");
+                    UI.ShowPlayerInfo(player);
 
                 }
             }
             catch (Exception e)
             {
-                Display.Error($"Error loading player data: {e.Message}");
+                UI.ShowError($"Error loading player data: {e.Message}");
             }
         }
 
@@ -184,7 +183,7 @@ namespace RPG_Asn4
                 File.WriteAllText(fullPath, jsonString);
             } catch (Exception e) 
             {
-                Display.Error($"Save failed: {e.Message}");
+                UI.ShowError($"Save failed: {e.Message}");
             }
         }
     }

@@ -27,13 +27,13 @@
         {
             Health -= amount;
             if (Health < 0) Health = 0;
-            Console.WriteLine($"{Name} took {amount} damage. Remaining health: {Health}");
+            UI.ShowNpcAction($"{Name} took {amount} damage. Remaining health: {Health}");
         }
 
         public void Heal(int amount)
         {
             Health += amount;
-            Console.WriteLine($"{Name} healed {amount} health. Current health: {Health}");
+            UI.ShowNpcAction($"{Name} healed {amount} health. Current health: {Health}");
         }
         public void BlockInteraction(int turns)
         {

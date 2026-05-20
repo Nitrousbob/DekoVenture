@@ -37,7 +37,7 @@
         {
             if (!canInteract)
             {
-            Display.Igm($"{Name} signals that this is not a game.");
+            UI.Narrate($"{Name} signals that this is not a game.");
             return;
             }
                              

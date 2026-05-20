@@ -22,7 +22,7 @@ namespace RPG_Asn4
             }
             else if (chance < 80)
             {
-                Display.DarkAction($"{animal.Name} is foraging.");
+                UI.ShowNpcAction($"{animal.Name} is foraging.");
             }
         }
         public void Exit() {}
@@ -40,7 +40,7 @@ namespace RPG_Asn4
 
         public void Enter()
         {
-            Display.DarkAction($"{animal.Name} lies down and goes to sleep.");
+            UI.ShowNpcAction($"{animal.Name} lies down and goes to sleep.");
         }
         public void Update()
         {
@@ -50,12 +50,12 @@ namespace RPG_Asn4
             }
             else
             {
-                Display.DarkAction($"{animal.Name} is sleeping.");
+                UI.ShowNpcAction($"{animal.Name} is sleeping.");
             }
         }
         public void Exit()
         {
-            Display.DarkAction($"{animal.Name} wakes up and stretches.");
+            UI.ShowNpcAction($"{animal.Name} wakes up and stretches.");
         }
     }
 
@@ -71,7 +71,7 @@ namespace RPG_Asn4
 
         public void Enter()
         {
-            Display.Igm($"{animal.Name} makes {AnimalDialogFactory.GetRandomAnimalNoise()}");
+            UI.Narrate($"{animal.Name} makes {AnimalDialogFactory.GetRandomAnimalNoise()}");
         }
         public void Update()
         {

@@ -6,10 +6,10 @@
         static void Main(string[] args)
         {
             Game g = new Game();
-            Display.ShowWelcomeMessage();
+            UI.ShowWelcomeMessage();
             while (true)
             {
-                Display.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
+                UI.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
                 switch (TakeInput.PromptIntInstant("Please select an option: ", 1, 2, 3, 4))
                 {
                     case 1:
@@ -22,10 +22,10 @@
                         g.PlayGame();
                         break;
                     case 4:
-                        Display.Igm("Exiting...");
+                        UI.Narrate("Exiting...");
                         return;
                     default:
-                        Display.Error("Invalid choice. Please try again.");
+                        UI.ShowError("Invalid choice. Please try again.");
                         break;
                 }
             }

@@ -2,12 +2,12 @@
 {
     public static class InteractionHandler
     {
-        public static bool InteractWith(Scene scene, Player player)
+        public static bool InteractWith(Zone zone, Player player)
         {
-            var targets = scene.CurrentLocation.Interactables;
-            var exits = scene.CurrentLocation.Exits.ToList();
+            var targets = zone.CurrentLocation.Interactables;
+            var exits = zone.CurrentLocation.Exits.ToList();
 
-            Display.Igm("You see the following:");
+            UI.Narrate("You see the following:");
 
             int optionNumber = 1;
 
@@ -19,49 +19,68 @@
                 {
                     stateLabel = $" ({actor.StateMachine.CurrentState.Name})";
                 }
-                Display.List($"{optionNumber}. {targets[i].Name}{stateLabel}");
+                UI.ShowListItem($"{optionNumber}. {targets[i].Name}{stateLabel}");
                 optionNumber++;
             }
 
             // List all available Exits dynamically
             for (int i = 0; i < exits.Count; i++)
             {
-                Display.List($"{optionNumber}. Go {exits[i].Key} to {exits[i].Value.Name}");
+                UI.ShowListItem($"{optionNumber}. Go {exits[i].Key} to {exits[i].Value.Name}");
                 optionNumber++;
             }
 
+            
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
+            int inventoryOption = optionNumber++; //option to view the players inventory
             int exitOption = optionNumber; //  adds the final selection
-            Display.Igm($"{waitOption}. Wait a moment.");
-            Display.Igm($"{exitOption}. Back to Main Menu.");
+            UI.Narrate($"{waitOption}. Wait a moment.");
+            UI.Narrate($"{exitOption}. Back to Main Menu.");
             int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
 
             if (choice == exitOption)
             {
-                Display.Igm("You step back from the interaction.");
+                UI.Narrate("You step back from the interaction.");
                 return false;
             }
             else if (choice == waitOption)
             {
-                Display.Igm("You stand quietly, watching the area.");
+                UI.Narrate("You stand quietly, watching the area.");
+                return true;
+            }
+            else if (choice == inventoryOption)
+            {
+                player.ShowInventory();
                 return true;
             }
             else if (choice <= targets.Count)
             {
-                targets[choice - 1].OnInteract(player);
+                var target = targets[choice - 1];
+
+                if (target is Item item)
+                {
+                    UI.ShowNpcAction($"You picked up the {item.Name}.");
+                    player.Inventory.Add(item);
+                    zone.CurrentLocation.Interactables.Remove(item);
+                }
+                else
+                {
+                    target.OnInteract(player);
+                }
                 return true;
             }
+            
             else if (choice <= targets.Count + exits.Count) // They picked an Exit
             {
                 int exitIndex = choice - 1 - targets.Count;
                 var selectedExit = exits[exitIndex];
-                Display.Action($"\nYou travel {selectedExit.Key}...");
-                scene.CurrentLocation = selectedExit.Value; // MOVEMENT HAPPENS HERE!
+                UI.ShowNpcAction($"\nYou travel {selectedExit.Key}...");
+                zone.CurrentLocation = selectedExit.Value; // MOVEMENT HAPPENS HERE!
                 return true;
             }
             else
             {
-                Display.Error("Invalid Choice.");
+                UI.ShowError("Invalid Choice.");
                 return true;
             }
             

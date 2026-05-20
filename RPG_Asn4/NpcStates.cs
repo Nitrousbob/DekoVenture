@@ -20,7 +20,7 @@ namespace RPG_Asn4
             }
             else if (chance < 90) // 75% chance to do an idle action
             {
-                Display.DarkAction($"{npc.Name} {npc.IdleAction}.");
+                UI.ShowNpcAction($"{npc.Name} {npc.IdleAction}.");
             }
         }
         public void Exit() {}
@@ -40,18 +40,18 @@ namespace RPG_Asn4
 
         public void Enter()
         {
-            Display.Igm($"{npc.Name} {npc.BusyStart}");
+            UI.Narrate($"{npc.Name} {npc.BusyStart}");
         }
         public void Update()
         {
             if (Random.Shared.Next(100) < 20) // 20% chance to put it away
             {
-                Display.Igm($"{npc.Name} {npc.BusyEnd}.");
+                UI.Narrate($"{npc.Name} {npc.BusyEnd}.");
                 npc.StateMachine.ChangeState(npc.IdleState);
             }
             else
             {
-                Display.DarkAction($"{npc.Name} {npc.BusyAction}");
+                UI.ShowNpcAction($"{npc.Name} {npc.BusyAction}");
             }
         }
         public void Exit() {}
@@ -70,7 +70,7 @@ namespace RPG_Asn4
         public void Enter()
         {
             string greeting = DialogFactory.GetRandomGreeting(npc);
-            Display.Igm($"{npc.Name} says: '{greeting}'");
+            UI.Narrate($"{npc.Name} says: '{greeting}'");
         }
 
         public void Update()

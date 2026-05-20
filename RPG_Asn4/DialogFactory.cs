@@ -14,9 +14,9 @@ namespace RPG_Asn4
         {
         
             // 30% chance for the NPC to comment specifically on the current weather
-            if (Random.Shared.Next(100) < 30 && Game.CurrentGame?.CurrentScene != null)
+            if (Random.Shared.Next(100) < 30 && Game.CurrentGame?.CurrentZone != null)
             {
-                Weather currentWeather = Game.CurrentGame.CurrentScene.CurrentWeather;
+                Weather currentWeather = Game.CurrentGame.CurrentZone.CurrentWeather;
 
                 return currentWeather switch
                 {
@@ -89,11 +89,11 @@ namespace RPG_Asn4
 
         public static bool HandleDialogTurn(Actor a, Player p)
         {
-            Console.WriteLine("What would you like to do?");
+            UI.Narrate("What would you like to do?");
             var input = Console.ReadLine()?.ToLower();
             if (string.IsNullOrWhiteSpace(input))
             {
-                Console.WriteLine("No command entered.");
+                UI.ShowError("No command entered.");
                 return true;
             }
 
@@ -108,7 +108,7 @@ namespace RPG_Asn4
             {
                 foreach (Token token in ast)
                 {
-                    Console.WriteLine($"{token.Name}: {token.Value}");
+                    UI.ShowListItem($"{token.Name}: {token.Value}");
                 }
             }
 
@@ -128,12 +128,12 @@ namespace RPG_Asn4
                 }
                 catch (KeyNotFoundException)
                 {
-                    Console.WriteLine("That verb is not recognized.");
+                    UI.ShowError("That verb is not recognized.");
                 }
             }
             else
             {
-                Console.WriteLine("No verb found.");
+                UI.ShowError("No verb found.");
             }
             
             return true;
