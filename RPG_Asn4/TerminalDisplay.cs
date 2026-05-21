@@ -51,7 +51,7 @@ namespace RPG_Asn4
         {
             Clr.G($"Player Name: {player.Name}, Health: {player.Health}\n");
         }
-        public void ShowInventory(List<Item> items)
+        public void ShowInventory(List<(Item item, int count)> items)
         {
             if (items.Count == 0)
             {
@@ -59,9 +59,11 @@ namespace RPG_Asn4
                 return;
             }
             Narrate("\n--- Inventory ---");
-            foreach (var item in items)
+            for (int i = 0; i < items.Count; i++)
             {
-                ShowListItem($"- {item.Name}: {item.Description}");
+                string quantity = items[i].item.isStackable && items[i].count > 1 ? $" ({items[i].count})" : "";
+                ShowListItem($"{i + 1}. {items[i].item.Name}{quantity}: {items[i].item.Description}");
+            //TODO Make a helper method to show each line item so this ShowInventory doesnt grow too much
             }
         }
 

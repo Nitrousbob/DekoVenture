@@ -20,10 +20,17 @@ namespace RPG_Asn4
         private Player? player;  //this is a nullable type, so it can be
         public bool isPlayerLoaded => player != null;
         private string path = AppDomain.CurrentDomain.BaseDirectory;  //this will put it in the same directory as executable, which is probably the bin/Debug/net10.0 folder
+        public StatusBar GameStatusBar { get; private set; }
         public Game()
         {
             CurrentGame = this;
             currentState = GameState.MainMenu;
+
+            //initiate the status bar
+            GameStatusBar = new StatusBar();
+            GameStatusBar.AddComponent(new HealthComponent());
+            GameStatusBar.AddComponent(new StatusEffectComponent());
+            GameStatusBar.AddComponent(new CurrencyComponent());
         }
 
         public void Run()
@@ -87,9 +94,16 @@ namespace RPG_Asn4
             bool inWorld = true;
             while (inWorld)
             {
+                GameStatusBar.Render(player);
                 inWorld = CurrentZone.Describe(player);
+                if (player.Health <= 0)
+                {
+                    UI.ShowError("\n ** You have died. Game Over. **");
+                    inWorld = false;
+                    player = null;
+                }
             }
-
+            
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
         }
         

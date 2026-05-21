@@ -17,9 +17,14 @@ namespace RPG_Asn4
             
             Location clearing = new Location("Small Clearing", "You stand in a quiet clearing surrounded by a dense forest");
             clearing.Interactables.AddRange(startNpcs);
-            Item coin = new Item("Shiny coin", "A slightly tarnished but shiny gold coin.");
+            //Add a couple items to interact with to test
+            CurrencyItem coin = new CurrencyItem("Shiny coin", "A slightly tarnished but shiny gold coin.", 5);
             clearing.Interactables.Add(coin);
-
+            Consumable potionStack = new Consumable("Health Potion","A small vial of red liquid (Heals 10hp)", 10, EffectType.Poison)
+            {
+                Quantity = 2
+            };
+            clearing.Interactables.Add(potionStack);
             Location darkWoods = new Location("Dark Woods", "The trees are thick and ominous, The light barely pierces the canopy");
             clearing.AddExit("north", darkWoods);
             darkWoods.AddExit("south", clearing);

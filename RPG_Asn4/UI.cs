@@ -20,7 +20,7 @@ namespace RPG_Asn4
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);
         public static void ShowNpcAction(string actionText) => Current.ShowNpcAction(actionText);
         public static void ShowPlayerInfo(Player player) => Current.ShowPlayerInfo(player);
-        public static void ShowInventory(List<Item> items) => Current.ShowInventory(items);
+        public static void ShowInventory(List<(Item item, int count)> items) => Current.ShowInventory(items);
 
         //---Generic fallback text, ya know something
         public static void ShowText(string input) => Current.ShowText(input);

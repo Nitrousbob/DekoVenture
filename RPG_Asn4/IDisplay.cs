@@ -11,7 +11,7 @@ namespace RPG_Asn4
         void ShowPlayerAction(string actionText);
         void ShowNpcAction(string actionText);
         void ShowPlayerInfo(Player player);
-        void ShowInventory(List<Item> items);
+        void ShowInventory(List<(Item item, int count)> items);
         void ShowText(string input);
     }
 }

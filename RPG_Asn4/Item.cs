@@ -8,6 +8,8 @@ namespace RPG_Asn4
         //There is an IInteractable interface that is implemented by the Item class. 
         // This interface has a method called canInteract that returns
         public bool canInteract => true;
+        public bool isStackable;
+        public int Quantity { get; set; } = 1;
 
         public Item(){}
 
@@ -19,9 +21,13 @@ namespace RPG_Asn4
 
         public string GetDescription() => Description;
         
-        public void OnInteract(Player player)
-        {}
+        public void OnInteract(Player player){}
 
+        public virtual void Use(Player player)
+        {
+            UI.Narrate($"You can't use the {Name} right now");
+        }
+        
         public void BlockInteraction(int turns) {}
         public void TickInteractionCooldown() {}
         

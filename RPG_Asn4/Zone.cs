@@ -35,7 +35,7 @@
             turnsToTimeChange = 4;  //takes 4 interaction turns to advance the time of day
         }
 
-        public string? TickTurn()
+        public string? TickTurn(Player player)
         {
             string? environmentMessage = UpdateTimeAndWeather();
             //local is not a wide enough catch for what could be there.
@@ -45,19 +45,26 @@
 
                 if (local is Actor actor)
                 {
+                    actor.Vitals.TickEffects();
                     actor.StateMachine.Update();
                 }
             }
+            player.Vitals?.TickEffects();
             return environmentMessage;
         }
 
         public bool Describe(Player player)
         {
             UI.Narrate($"{CurrentLocation.Name}");
-            string? envMessage = TickTurn();  //bring the world alive
+            string? envMessage = TickTurn(player);  //bring the world alive
             if (!string.IsNullOrEmpty(envMessage))
             {
                 UI.Narrate(envMessage);
+            }
+            //check for player death during this part of turn tick
+            if (player.Health <= 0)
+            {
+                return false;
             }
             return InteractionHandler.InteractWith(this, player);
         }

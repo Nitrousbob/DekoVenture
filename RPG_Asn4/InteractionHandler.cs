@@ -29,16 +29,20 @@
                 UI.ShowListItem($"{optionNumber}. Go {exits[i].Key} to {exits[i].Value.Name}");
                 optionNumber++;
             }
-
             
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
-            int inventoryOption = optionNumber++; //option to view the players inventory
             int exitOption = optionNumber; //  adds the final selection
+            UI.Narrate($"0. View Inventory.");
             UI.Narrate($"{waitOption}. Wait a moment.");
             UI.Narrate($"{exitOption}. Back to Main Menu.");
-            int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
+            int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 0, exitOption);
 
-            if (choice == exitOption)
+            if (choice == 0)
+            {
+                player.ShowInventory();
+                return true;
+            }
+            else if (choice == exitOption)
             {
                 UI.Narrate("You step back from the interaction.");
                 return false;
@@ -48,19 +52,30 @@
                 UI.Narrate("You stand quietly, watching the area.");
                 return true;
             }
-            else if (choice == inventoryOption)
-            {
-                player.ShowInventory();
-                return true;
-            }
             else if (choice <= targets.Count)
             {
                 var target = targets[choice - 1];
 
-                if (target is Item item)
+                if (target is CurrencyItem currency)
                 {
-                    UI.ShowNpcAction($"You picked up the {item.Name}.");
-                    player.Inventory.Add(item);
+                    UI.ShowNpcAction($"You picked up the {currency.Name}.");
+                    player.Gold += currency.Amount;
+                    zone.CurrentLocation.Interactables.Remove(currency);
+                }
+                else if (target is Item item)
+                {
+                    UI.ShowNpcAction($"You picked up {item.Quantity}x {item.Name}.");
+
+                    var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
+                    if (existing != null)
+                    {
+                        existing.Quantity += item.Quantity;
+                    }
+                    else
+                    {
+                        player.Inventory.Add(item);
+                    }
+
                     zone.CurrentLocation.Interactables.Remove(item);
                 }
                 else

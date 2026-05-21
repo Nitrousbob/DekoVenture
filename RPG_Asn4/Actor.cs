@@ -5,7 +5,9 @@
         public StateMachine StateMachine { get; private set; } = new StateMachine();
 
         public string Name { get; private set; }
-        public int Health { get; private set; }
+        public HealthManager Vitals {get; set;}  //not sure I like vitals yet
+        public int Health => Vitals?.CurrentHealth ?? 0;  //A wrapper for our original Health
+        public int Gold {get; set;} = 0;
         public int interactionCooldown { get; private set; } = 0;
         public bool canInteract
         {
@@ -15,7 +17,7 @@
         protected Actor(string name, int health)
         {
             Name = name;
-            Health = health;
+            Vitals = new HealthManager(health);
         }
 
         protected Actor(string name)
@@ -25,14 +27,13 @@
 
         public void TakeDamage(int amount)
         {
-            Health -= amount;
-            if (Health < 0) Health = 0;
+            Vitals.TakeDamage(amount);
             UI.ShowNpcAction($"{Name} took {amount} damage. Remaining health: {Health}");
         }
 
         public void Heal(int amount)
         {
-            Health += amount;
+            Vitals.Heal(amount);
             UI.ShowNpcAction($"{Name} healed {amount} health. Current health: {Health}");
         }
         public void BlockInteraction(int turns)
