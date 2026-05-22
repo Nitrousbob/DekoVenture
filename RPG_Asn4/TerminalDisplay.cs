@@ -50,6 +50,15 @@ namespace RPG_Asn4
         public void ShowPlayerInfo(Player player)
         {
             Clr.G($"Player Name: {player.Name}, Health: {player.Health}\n");
+
+            if(player.EquippedWeapon != null)
+            {
+                Clr.DY($"Weapon: {player.EquippedWeapon.Name} ({player.EquippedWeapon.MinDamage}-{player.EquippedWeapon.MaxDamage} damage)\n");
+            }
+            if(player.EquippedArmor != null)
+            {
+                Clr.DY($"Armor: {player.EquippedArmor.Name} ({player.EquippedArmor.DefenseValue} Def)\n");
+            }
         }
         public void ShowInventory(List<(Item item, int count)> items)
         {

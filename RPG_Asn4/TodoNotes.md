@@ -15,6 +15,8 @@
  ## Implement a quest system, where the player can receive quests from NPCs and complete them for rewards. This will add more depth and variety to the gameplay, as well as give the player a sense of purpose and direction.
 
  ## Add a combat system, allowing the player to engage in battles with enemies. This could include turn-based combat, real-time combat, or a combination of both. The combat system should be engaging and strategic, requiring the player to make thoughtful decisions in order to succeed.
+ //Attacking does not stay in combat, you attack and then it just says what would you like to do, i think the combat state should be held unless the npc is not combative/passive
+//maybe need a thing to decide whether or not an npc would attack like an enemy or not, so enemies can attack upon encounter and maybe drunk npc's in a bar.
 
  // Combat Note: Ensure the HealthManager and Status Effect systems are heavily integrated into the combat loop so battles are dynamic and interesting. Need to create actual Enemy classes.
 
@@ -31,8 +33,11 @@
  //this can also be used in the environment and with beasts, such as a poisonous plant or a bleeding wound that needs to be treated.
 
  ## Rooms
+
+//Port the game to UNITY to have a graphical version
+
+//prioritize moving your Rooms, Items, and NPCs into JSON files so WorldBuilder parses files rather than instantiating hardcoded new Location(...) objects.
  <!-- treasure
- traps
- npcs - enemies, other folks List<Npc>
- items - interactable windows, plants desks portals
- Player? player (nullable) -->
+// traps
+//a containment trap could drop and you could break your way out of it if you are strong enough using the IDestructable, example.
+// items - interactable windows, plants desks portals

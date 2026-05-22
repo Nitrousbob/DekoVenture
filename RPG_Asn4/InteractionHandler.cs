@@ -32,73 +32,76 @@
             
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
             int exitOption = optionNumber; //  adds the final selection
-            UI.Narrate($"0. View Inventory.");
+            UI.Narrate($"I. View Inventory.");
             UI.Narrate($"{waitOption}. Wait a moment.");
             UI.Narrate($"{exitOption}. Back to Main Menu.");
-            int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 0, exitOption);
 
-            if (choice == 0)
+            while (true)
             {
-                player.ShowInventory();
-                return true;
-            }
-            else if (choice == exitOption)
-            {
-                UI.Narrate("You step back from the interaction.");
-                return false;
-            }
-            else if (choice == waitOption)
-            {
-                UI.Narrate("You stand quietly, watching the area.");
-                return true;
-            }
-            else if (choice <= targets.Count)
-            {
-                var target = targets[choice - 1];
+                string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
 
-                if (target is CurrencyItem currency)
+                if (input == "i" || input == "inventory")
                 {
-                    UI.ShowNpcAction($"You picked up the {currency.Name}.");
-                    player.Gold += currency.Amount;
-                    zone.CurrentLocation.Interactables.Remove(currency);
+                    player.ShowInventory();
+                    return true;
                 }
-                else if (target is Item item)
-                {
-                    UI.ShowNpcAction($"You picked up {item.Quantity}x {item.Name}.");
 
-                    var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
-                    if (existing != null)
+                if (int.TryParse(input, out int choice))
+                {
+                    if (choice == exitOption)
                     {
-                        existing.Quantity += item.Quantity;
+                        UI.Narrate("You step back from the interaction.");
+                        return false;
                     }
-                    else
+                    else if (choice == waitOption)
                     {
-                        player.Inventory.Add(item);
+                        UI.Narrate("You stand quietly, watching the area.");
+                        return true;
                     }
+                    else if (choice >= 1 && choice <= targets.Count)
+                    {
+                        var target = targets[choice - 1];
 
-                    zone.CurrentLocation.Interactables.Remove(item);
+                        if (target is CurrencyItem currency)
+                        {
+                            UI.ShowNpcAction($"You picked up the {currency.Name}.");
+                            player.Gold += currency.Amount;
+                            zone.CurrentLocation.Interactables.Remove(currency);
+                        }
+                        else if (target is Item item)
+                        {
+                            UI.ShowNpcAction($"You picked up {item.Quantity}x {item.Name}.");
+
+                            var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
+                            if (existing != null)
+                            {
+                                existing.Quantity += item.Quantity;
+                            }
+                            else
+                            {
+                                player.Inventory.Add(item);
+                            }
+
+                            zone.CurrentLocation.Interactables.Remove(item);
+                        }
+                        else
+                        {
+                            target.OnInteract(player);
+                        }
+                        return true;
+                    }
+                    else if (choice > targets.Count && choice <= targets.Count + exits.Count) // They picked an Exit
+                    {
+                        int exitIndex = choice - 1 - targets.Count;
+                        var selectedExit = exits[exitIndex];
+                        UI.ShowNpcAction($"\nYou travel {selectedExit.Key}...");
+                        zone.CurrentLocation = selectedExit.Value; // MOVEMENT HAPPENS HERE!
+                        return true;
+                    }
                 }
-                else
-                {
-                    target.OnInteract(player);
-                }
-                return true;
-            }
-            
-            else if (choice <= targets.Count + exits.Count) // They picked an Exit
-            {
-                int exitIndex = choice - 1 - targets.Count;
-                var selectedExit = exits[exitIndex];
-                UI.ShowNpcAction($"\nYou travel {selectedExit.Key}...");
-                zone.CurrentLocation = selectedExit.Value; // MOVEMENT HAPPENS HERE!
-                return true;
-            }
-            else
-            {
+
                 UI.ShowError("Invalid Choice.");
-                return true;
             }
-            
         }
     }
 }

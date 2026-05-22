@@ -111,5 +111,12 @@
             return Console.ReadLine() ?? "Unnamed Hero";
         }
 
+        //Upon a code review from Gemini, this function helps decouple my TakeInput class to handle basic string inputs no matter where they come from
+        public static string GetString(string prompt)
+        {
+            UI.Narrate(prompt);
+            return Console.ReadLine() ?? string.Empty;
+        }
+
     }
 }

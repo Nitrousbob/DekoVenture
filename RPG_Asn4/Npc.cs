@@ -1,11 +1,12 @@
 ﻿namespace RPG_Asn4
 {
-    public class Npc : Actor, IInspectable, ITalkable, IQuestionable, IReactable
+    public class Npc : Actor, IInspectable, ITalkable, IQuestionable, IReactable, IAttackable
     {
         public Player? CurrentPlayer { get; set; }
         public NpcIdleState IdleState { get; private set; }
         public NpcTalkingState TalkingState { get; private set; }
         public NpcBusyState BusyState { get; private set; }
+        public NpcCombatState CombatState { get; private set; }
 
         //These are flavor text properties for Idle and Busy States
         public string IdleAction {get; set;}
@@ -21,6 +22,7 @@
             IdleState = new NpcIdleState(this);
             TalkingState = new NpcTalkingState(this);
             BusyState = new NpcBusyState(this);
+            CombatState = new NpcCombatState(this);
 
             StateMachine.Initialize(IdleState);
         }
@@ -74,7 +76,6 @@
             {
                 return "I'm all out of responses now too";
             }
-
             
         }
         public string GetQuestionResponse()
@@ -106,23 +107,31 @@
         {
             //Display.Action($"You flirt with {Name}");  srp refactor
             return $"{Name} blushes and looks away.";
-
         }
 
         public string OnFartedAt()
         {
             //Display.Action($"You break wind in their general direction");  srp refactor
 
-                int choice = Random.Shared.Next(3);
-                switch (choice)
-                {
-                    case 0:
-                        return $"{Name} laughs at your display of bodily function.";
-                    case 1:
-                        return $"{Name} is not amused.";
-                    default:
-                        return $"{Name} fires back with their own brand of flatulence";
-                }
+            int choice = Random.Shared.Next(3);
+            switch (choice)
+            {
+                case 0:
+                    return $"{Name} laughs at your display of bodily function.";
+                case 1:
+                    return $"{Name} is not amused.";
+                default:
+                    return $"{Name} fires back with their own brand of flatulence";
+            }
+        }
+
+        public void EnterCombat(Player player)
+        {
+            if (StateMachine.CurrentState != CombatState && IsAlive)
+            {
+                CurrentPlayer = player;
+                StateMachine.ChangeState(CombatState);
+            }
         }
     }
 

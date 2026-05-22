@@ -70,6 +70,28 @@
 
         }
 
+        public void Attack(List<Token> tokens, ComContext c)
+        {
+            if (c.CurrentTarget is IDestructible target && target.IsAlive)
+            {
+                UI.ShowPlayerAction($"You attack {c.CurrentTarget.Name}");
+                
+                // Hardcoded damage for now.
+                int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1,4);
+                target.TakeDamage(damage);
+
+                // Only enter combat if the target is capable of fighting back!
+                if (target is IAttackable combatant)
+                {
+                    combatant.EnterCombat(c.Player);
+                }
+            }
+            else
+            {
+                UI.Narrate("You can't attack that, or it's already destroyed.");
+            }
+        }
+
         public void Agitate(List<Token> tokens, ComContext c)
         {
             if (c.CurrentTarget is IReactable reactable)

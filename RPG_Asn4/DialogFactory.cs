@@ -89,8 +89,7 @@ namespace RPG_Asn4
 
         public static bool HandleDialogTurn(Actor a, Player p)
         {
-            UI.Narrate("What would you like to do?");
-            var input = Console.ReadLine()?.ToLower();
+            var input = TakeInput.GetString("What would you like to do?")?.ToLower();
             if (string.IsNullOrWhiteSpace(input))
             {
                 UI.ShowError("No command entered.");
