@@ -1,10 +1,8 @@
 namespace RPG_Asn4
 {
-public class SecretNpc : Npc, ISecretKeeper
+    public class SecretNpc : Npc, ISecretKeeper
     {
         private readonly ISecretKeeper _secretBehavior; //a property for a secretKeeper
-
-        public string RequiredItemName { get; set; }
         public string Secret { get; set; }
 
         public SecretNpc(string name, int health, string requiredItemName, string secret) : base(name, health, true)
@@ -24,6 +22,12 @@ public class SecretNpc : Npc, ISecretKeeper
     {
         public string RequiredItemName {get; set; }
         public string Secret {get; set;}
+
+        public SecretMiser(string requiredItemName, string secret)
+        {
+            RequiredItemName = requiredItemName;
+            Secret = secret;
+        }
 
         public bool TryRevealSecret(Player player, Item? offeredItem = null)
         {

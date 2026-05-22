@@ -35,7 +35,11 @@
 
         public void Ask(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is IQuestionable questionable)
+            if (c.CurrentTarget is ISecretKeeper secretKeeper)
+            {
+                secretKeeper.TryRevealSecret(c.Player);
+            }
+            else if (c.CurrentTarget is IQuestionable questionable)
             {
                 UI.ShowPlayerAction($"You ask {questionable.Name} a question.");
                 UI.Narrate(questionable.GetQuestionResponse());

@@ -7,16 +7,20 @@
  ## Add a way for NPCs to talk about their current location and what they're doing there.
 
  ## Continue to refine the SRP and Proper Design Patterns, Preferring Composition over Inheritance
+ // Note: While composition is generally preferred, use Inheritance for simple "is-a" relationships and specialized behavior overrides (e.g., SecretMiser is simply a more specific version of a SecretNpc).
 
  ## The NPCs dont talk about the time of day, the time of day may be important to the story, they dont have to , but sometimes it should happen
  // if the player needs to do something time specific, the NPCs should talk about it, if they dont, then the player may miss out on important information
 
-
- ## Add an inventory system, allowing the player to collect and manage items they find during their adventure. This could include weapons, armor, potions, and other useful items that can help the player on their journey.
-
  ## Implement a quest system, where the player can receive quests from NPCs and complete them for rewards. This will add more depth and variety to the gameplay, as well as give the player a sense of purpose and direction.
 
  ## Add a combat system, allowing the player to engage in battles with enemies. This could include turn-based combat, real-time combat, or a combination of both. The combat system should be engaging and strategic, requiring the player to make thoughtful decisions in order to succeed.
+
+ // Combat Note: Ensure the HealthManager and Status Effect systems are heavily integrated into the combat loop so battles are dynamic and interesting. Need to create actual Enemy classes.
+
+ ## Game Theme & Architecture: Shift the game's flavor towards a "Retro Futurism" style. Keep the core class naming conventions (Actor, Zone, Item, etc.) flexible and generic so the engine can support any setting!
+
+ ## World Building: Author the new map based on the paper scaffold using the existing WorldBuilder and Factory systems.
 
  ## Implement a leveling system, where the player can gain experience points and level up their character. This will allow the player to improve their stats and abilities, making them stronger and more capable as they progress through the game.
 

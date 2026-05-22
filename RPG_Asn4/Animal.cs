@@ -28,7 +28,7 @@
             return $"You see {Name}, a {Species} in this world?";
         }
 
-        public string GetPetResponse()
+        public virtual string GetPetResponse()
         {
             return $"{Name} seems to enjoy the petting.";
         }
@@ -65,6 +65,28 @@
         public string OnFartedAt()
         {
             return $"{Name} just stares at you, unfazed.";
+        }
+    }
+
+    public class SecretAnimal : Animal
+    {
+        public Item HiddenItem {get; set;}
+        private bool _secretRevealed = false;
+
+        public SecretAnimal(string name, int health, string species, bool hasEyes, Item hiddenItem) : base(name, health, species, hasEyes)
+        {
+            HiddenItem = hiddenItem;
+        }
+
+        public override string GetPetResponse()
+        {
+            if (!_secretRevealed)
+            {
+                _secretRevealed = true;
+                Game.CurrentGame?.CurrentZone?.CurrentLocation.Interactables.Add(HiddenItem);
+                return $"{base.GetPetResponse()}\n{Name} happily paws at the dirt, revealing a {HiddenItem.Name}.";
+            }
+                return $"base.GetPetResponse()";
         }
     }
 }
