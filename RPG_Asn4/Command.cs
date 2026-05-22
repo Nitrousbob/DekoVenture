@@ -118,6 +118,44 @@
             }
         }
 
+        public void Give(List<Token> tokens, ComContext c)
+        {
+            string itemName = tokens.Where(t => t.Name == TokenType.subject).Select(t=> t.Value).FirstOrDefault() ?? "";
+            
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            
+                {
+                    UI.Narrate("Give what?");
+                    return;
+                }
+
+            Item? item = c.Player.Inventory.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+            if (item == null)
+            {
+                UI.Narrate("You don't have that item.");
+                return;
+            }
+
+            if (c.CurrentTarget is not ISecretKeeper secretKeeper)
+            {
+                UI.ShowPlayerAction($"{c.CurrentTarget?.Name} doesn't seem interested in that.");
+                return;
+            }
+
+            bool secretRevealed = secretKeeper.TryRevealSecret(c.Player, item);
+
+            if (secretRevealed)
+            {
+                item.Quantity--;
+                if (item.Quantity <= 0)
+                {
+                    c.Player.Inventory.Remove(item);
+                }
+            }
+        }
+
         public void Help(List<Token> tokens, ComContext c)
         {
             UI.ShowPlayerAction("Available commands: ");

@@ -72,6 +72,20 @@ namespace RPG_Asn4
             }
         }
 
+        //a helper method to make groups of townsfolks, to sprinkle some unauthored folks around
+        public static List<IInteractable> CreateTownsfolk(int count)
+        {
+            //create the return type, the List
+            var group = new List<IInteractable>();
+            
+            //make count many
+            for (int i = 0; i < count; i++)
+                {
+                    group.Add(GetStandardTier(1));
+                }
+                return group;
+        }
+
         private static bool RollHasEyes(int chanceEyes)
         {
             return Random.Shared.Next(100) < chanceEyes;

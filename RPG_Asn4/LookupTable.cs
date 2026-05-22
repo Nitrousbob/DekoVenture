@@ -33,6 +33,7 @@ namespace RPG_Asn4
             Add("laugh", c.Laugh);
             Add("flirt", c.Flirt);
             Add("fart", c.Fart);
+            Add("give", c.Give);
         }
     }
 }

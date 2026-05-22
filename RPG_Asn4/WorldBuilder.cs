@@ -8,13 +8,8 @@ namespace RPG_Asn4
         {
             var startNpcs = new List<IInteractable>();
 
-            for (int i = 0; i < 2; i++)
-            {
-                startNpcs.Add(HumanNpcFactory.GetStandardTier(1));
-            }
-   
             Location clearing = new Location("Small Clearing", "You stand in a quiet clearing surrounded by a dense forest");
-            clearing.Interactables.AddRange(startNpcs);
+            clearing.Interactables.AddRange(HumanNpcFactory.CreateTownsfolk(2));
             //Add a couple items to interact with to test
             clearing.Interactables.Add(ItemFactory.CreateGoldCoin(5));
             clearing.Interactables.Add(ItemFactory.CreateHealthDrink(2));
@@ -25,9 +20,6 @@ namespace RPG_Asn4
             darkWoods.Interactables.Add(ItemFactory.CreateLotion(1));
             darkWoods.AddExit("south", clearing);
             darkWoods.Interactables.Add(AnimalNpcFactory.GetStandardTier(1));
-
-
-
             return new Zone("Starting Zone", clearing);
         }
     }
