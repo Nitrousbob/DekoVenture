@@ -3,7 +3,6 @@
     public abstract class Actor : IDamageable, IInteractable
     {
         public StateMachine StateMachine { get; private set; } = new StateMachine();
-
         public string Name { get; private set; }
         public HealthManager Vitals {get; set;}  //not sure I like vitals yet
         public int Health => Vitals?.CurrentHealth ?? 0;  //A wrapper for our original Health
@@ -24,23 +23,21 @@
         {
             Name = name;
         }
-
         public void TakeDamage(int amount)
         {
             Vitals.TakeDamage(amount);
             UI.ShowNpcAction($"{Name} took {amount} damage. Remaining health: {Health}");
         }
-
-        public void Heal(int amount)
+        public int Heal(int amount)
         {
-            Vitals.Heal(amount);
+            int healed = Vitals.Heal(amount);
             UI.ShowNpcAction($"{Name} healed {amount} health. Current health: {Health}");
+            return healed;
         }
         public void BlockInteraction(int turns)
         {
             interactionCooldown = turns;
         }
-
         public void TickInteractionCooldown()
         {
             if (interactionCooldown > 0)

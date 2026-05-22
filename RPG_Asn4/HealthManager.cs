@@ -5,7 +5,8 @@ namespace RPG_Asn4
         Poison,
         Bleeding,
         Blinded,
-        Stunned
+        Stunned,
+        SkinsuitPrep,
     }
 
     public class StatusEffect
@@ -13,9 +14,7 @@ namespace RPG_Asn4
         public EffectType Type { get; set;}
         public int Duration { get; set; }
         public int Magnitude {get; set; }
-
         public StatusEffect(){}
-
         public StatusEffect(EffectType type, int duration, int magnitude)
         {
             Type = type;
@@ -30,11 +29,10 @@ namespace RPG_Asn4
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
         public List<StatusEffect> ActiveEffects {get; set;} = new List<StatusEffect>();
-
         public HealthManager(){}
         public HealthManager(int maxHealth)
         {
-            MaxHealth = maxHealth;
+            MaxHealth = Math.Max(1, maxHealth);
             CurrentHealth = maxHealth;
         }
 
@@ -43,10 +41,17 @@ namespace RPG_Asn4
             CurrentHealth -= amount;
             if (CurrentHealth < 0) CurrentHealth = 0;
         }
-        public void Heal(int amount)
+        public int Heal(int amount)
         {
+            int before = CurrentHealth;
             CurrentHealth += amount;
             if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
+            return CurrentHealth - before;
+        }
+
+        public int GetCurrentHealth()
+        {
+            return CurrentHealth;
         }
 
         public void AddEffect(StatusEffect effect)

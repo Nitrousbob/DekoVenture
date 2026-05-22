@@ -1,7 +1,5 @@
 # Things to Implement
 
-## Todo: NightTime  
-
  //night time characters could be different than daytime characters along with animals.
 
  ## More than one Hardcoded Scene, where are they, in front of a shop, a path?
@@ -33,6 +31,4 @@
  traps
  npcs - enemies, other folks List<Npc>
  items - interactable windows, plants desks portals
- string description
- exits
  Player? player (nullable) -->

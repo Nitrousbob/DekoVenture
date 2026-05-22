@@ -3,6 +3,6 @@
     internal interface IDamageable
     {
         void TakeDamage(int damage);
-        void Heal(int amount);
+        int Heal(int amount);
     }
 }

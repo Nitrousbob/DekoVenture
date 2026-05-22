@@ -23,9 +23,10 @@ namespace RPG_Asn4
         
         public void OnInteract(Player player){}
 
-        public virtual void Use(Player player)
+        public virtual bool Use(Player player)
         {
             UI.Narrate($"You can't use the {Name} right now");
+            return false;
         }
         
         public void BlockInteraction(int turns) {}

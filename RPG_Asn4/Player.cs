@@ -5,10 +5,7 @@
         //the player has to track its own state 
         public List<Item> Inventory { get; set; } = new List<Item>();
 
-        public Player(string name, int health) : base(name, health)
-        {
-            
-        }
+        public Player(string name, int health) : base(name, health){}
 
         public void ShowInventory()
         {
@@ -23,7 +20,16 @@
             if (choice > 0)
             {
                 var selectedItem = displayList[choice -1].item;
-                selectedItem.Use(this);
+                bool wasUsed = selectedItem.Use(this);
+
+                if (wasUsed)
+                {
+                    selectedItem.Quantity--;
+                    if (selectedItem.Quantity <= 0)
+                    {
+                        Inventory.Remove(selectedItem);
+                    }
+                }
             }
         }
         
