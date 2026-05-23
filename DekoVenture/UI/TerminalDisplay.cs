@@ -30,9 +30,14 @@ namespace DekoVenture
             }
         }
 
+        public void EnemyDeath(string text)
+        {
+            Clr.DR(text + "\n");   
+        }
+
         public void ShowHelp(string text)
         {
-            Clr.W(text + "/n");
+            Clr.W(text + "\n");
         }
 
         public void ShowError(string message)

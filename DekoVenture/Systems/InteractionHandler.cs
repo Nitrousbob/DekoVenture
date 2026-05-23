@@ -2,6 +2,10 @@
 {
     public static class InteractionHandler
     {
+        private interface IInteractionCommand
+        {
+            bool Execute();
+        }
         public static bool InteractWith(Zone zone, Player player)
         {
             var targets = zone.CurrentLocation.Interactables;
@@ -91,7 +95,7 @@
                             if (target is Enemy enemy && !enemy.IsAlive && !enemy.HasLoot())
                             {
                                 zone.CurrentLocation.Interactables.Remove(enemy);
-                                UI.Narrate($"{enemy.Name}'s remains fade away.");
+                                UI.EnemyDeath($"{enemy.Name}'s remains fade away.");
                             }
                         }
                         return true;

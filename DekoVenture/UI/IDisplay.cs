@@ -14,5 +14,6 @@ namespace DekoVenture
         void ShowPlayerInfo(Player player);
         void ShowInventory(List<(Item item, int count)> items);
         void ShowText(string input);
+        void EnemyDeath(string text);
     }
 }

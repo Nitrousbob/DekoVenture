@@ -13,6 +13,7 @@ namespace DekoVenture
         //---Game World and Narration
         public static void Narrate(string message) => Current.Narrate(message);
         public static void ShowListItem(string text) => Current.ShowListItem(text);
+        public static void EnemyDeath(string text) => Current.EnemyDeath(text);
 
         //---Character and Interactions
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);
