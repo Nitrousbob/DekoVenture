@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace DekoVenture
 {
     public class Location

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-//adding a command is easy, just add an entry in the lookup table and make sure the method exists in Command.cs.
+﻿//adding a command is easy, just add an entry in the lookup table and make sure the method exists in Command.cs.
 //The method signature should be void MethodName(List<Token> tokens, ComContext context) and the method should
 //be public.  The command name is the string key in the lookup table, and the method is the value.
 //The command name can be whatever you want, but it should be something that makes sense for the action it performs.
@@ -31,6 +27,8 @@ namespace DekoVenture
             Add("quit", c.Exit);
             Add("bye", c.Exit);
             Add("leave", c.Exit);
+            Add("run", c.Exit);
+            Add("flee", c.Exit);
             Add("laugh", c.Laugh);
             Add("flirt", c.Flirt);
             Add("fart", c.Fart);

@@ -1,5 +1,3 @@
-using DekoVenture;
-
 namespace DekoVenture
 {
     public class AnimalForagingState : IState

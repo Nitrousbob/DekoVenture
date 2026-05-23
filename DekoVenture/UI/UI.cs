@@ -1,10 +1,8 @@
-using Microsoft.VisualBasic;
-
 namespace DekoVenture
 {
     public static class UI
     {
-        public static IDisplay Current {get; set;} = new TerminalDisplay();
+        public static IDisplay Current { get; set; } = new TerminalDisplay();
 
         //---System and Menu
         public static void ShowWelcomeMessage() => Current.ShowWelcomeMessage();

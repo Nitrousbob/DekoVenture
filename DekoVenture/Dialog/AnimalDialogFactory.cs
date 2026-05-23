@@ -1,4 +1,4 @@
-﻿﻿namespace DekoVenture
+﻿namespace DekoVenture
 {
     public class AnimalDialogFactory
     {

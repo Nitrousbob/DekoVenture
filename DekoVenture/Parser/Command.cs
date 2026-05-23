@@ -1,4 +1,4 @@
-﻿﻿namespace DekoVenture
+﻿namespace DekoVenture
 {
     //im starting to notice my Command class needs to know about the Context of the game for different commands.
     public class Command
@@ -185,13 +185,30 @@
         public void Help(List<Token> tokens, ComContext c)
         {
             UI.ShowPlayerAction("Available commands: ");
-            UI.ShowPlayerAction("pet, look, hit, slap, talk, laugh, flirt, fart, help, exit, quit, bye, leave");
-            //can the list for actions build up from a dictionary and display available options?
+            
+            string commandList = string.Join(",",DialogFactory.lookupTable.Keys); //this lists all the commands
+            UI.ShowPlayerAction(commandList);
+            if(c.CurrentTarget is Actor actor && actor.StateMachine.CurrentState != null)
+            {
+                UI.Narrate($"Context: {actor.Name} is currently in the '{actor.StateMachine.CurrentState.Name}' state.");
+
+                if(actor.StateMachine.CurrentState.Name == "Combat")
+                {
+                    UI.Narrate("Hint: You are in combat! Attack your target or run for your life");
+                }
+            }
         }
 
         public void Exit(List<Token> tokens, ComContext c)
         {
-            UI.Narrate("Ending conversation...");
+            if (c.CurrentTarget is Enemy || (c.CurrentTarget is Actor a && a.StateMachine.CurrentState?.Name == "Combat"))
+            {
+                UI.Narrate("You flee from the encounter!");
+            }
+            else
+            {
+                UI.Narrate("Ending conversation...");
+            }
             c.EndInteration = true;
         }
     }

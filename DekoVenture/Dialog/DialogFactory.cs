@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace DekoVenture
 {
     public static class DialogFactory
     {
-        private static readonly LookupTable lookupTable = new LookupTable();
+        internal static readonly LookupTable lookupTable = new LookupTable();
         private static readonly Tokenizer tokenizer = new Tokenizer();
-        
+
         public static string GetRandomGreeting(Npc n)
         {
-        
+
             // 30% chance for the NPC to comment specifically on the current weather
             if (Random.Shared.Next(100) < 30 && Game.CurrentGame?.CurrentZone != null)
             {
@@ -30,8 +25,8 @@ namespace DekoVenture
                 };
             }
 
-        string[] NpcTownsfolkGreeting =  
-            {
+            string[] NpcTownsfolkGreeting =
+                {
                 "Lovely weather we're having, isn't it?",
                 "Have you heard the latest gossip from the market?",
                 "I remember when this town was just a small village.",
@@ -43,7 +38,7 @@ namespace DekoVenture
                 "The festival is coming up, it's always a good time.",
                 "I wish I could travel, but I'm too old for that now."
             };
-           
+
             int index = Random.Shared.Next(NpcTownsfolkGreeting.Length);
             return NpcTownsfolkGreeting[index];
         }
@@ -112,15 +107,15 @@ namespace DekoVenture
             }
 
             var verb = ast?.FirstOrDefault(x => x.Name == TokenType.verb);
-            if (verb is not null)  
+            if (verb is not null)
             {
                 try
                 {
                     Action action = lookupTable[verb.Value];
                     ComContext context = new ComContext(p, a);
                     action(ast, context);
-                    
-                    if (context.EndInteration || !a.canInteract)
+
+                    if (context.EndInteration || !a.canInteract || !a.IsAlive || !p.IsAlive)
                     {
                         return false;
                     }
@@ -134,7 +129,7 @@ namespace DekoVenture
             {
                 UI.ShowError("No verb found.");
             }
-            
+
             return true;
         }
 

@@ -1,3 +1,4 @@
+
 namespace DekoVenture
 {
     public interface IDisplay
