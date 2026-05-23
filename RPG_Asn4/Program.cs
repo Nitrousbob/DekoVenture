@@ -9,7 +9,7 @@
             UI.ShowWelcomeMessage();
             while (true)
             {
-                UI.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
+                UI.ShowMenuChoices(new string[] { "Create Character\n", "Load Character\n", "Start Game\n", "Exit\n" });
                 switch (TakeInput.PromptIntInstant("Please select an option: ", 1, 2, 3, 4))
                 {
                     case 1:

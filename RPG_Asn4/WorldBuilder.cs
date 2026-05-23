@@ -24,7 +24,6 @@ namespace RPG_Asn4
             clearing.Interactables.Add(ItemFactory.CreateGoldCoin(5));
             clearing.Interactables.Add(ItemFactory.CreateHealthDrink(2));
             
-
             Location darkWoods = new Location("Dark Woods", "The trees are thick and ominous, The light barely pierces the canopy");
             clearing.AddExit("north", darkWoods); //have to add the exit of the previous after the next room is built!
             darkWoods.Interactables.Add(ItemFactory.CreateLotion(1));
@@ -40,6 +39,19 @@ namespace RPG_Asn4
             darkWoods.AddExit("south", clearing);
             darkWoods.Interactables.Add(AnimalNpcFactory.GetStandardTier(1));
             darkWoods.Interactables.Add(new SecretAnimal("Precious", 10, "Dog", true, ItemFactory.CreateGoldCoin(10)));
+
+            Location smallCabin = new Location("Small Cabin", "It's a small house on an open field area");
+            darkWoods.AddExit("west", smallCabin);
+            smallCabin.Interactables.Add(new Door("Wood door", 2, "a sturdy but not indestructable wood door"));  //make the door close behind when they enter and have to break out
+            smallCabin.Interactables.Add(new Enemy("Cabin ghoul", 5)
+            {
+                GoldReward = 4,
+                LootItems = new List<Item> { ItemFactory.CreateHealthDrink(1) }
+            });  //bad thing inside cabin
+            smallCabin.AddExit("east", darkWoods);  //add exit of the previous after the next room (reminder)
+            smallCabin.Interactables.Add(ItemFactory.CreateGoldCoin(3)); //leave some change in the cabin
+            //Where do I add text to say upon entering and then setting the door to closed.
+
             return new Zone("Starting Zone", clearing);
         }
     }

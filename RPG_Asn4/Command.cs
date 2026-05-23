@@ -5,15 +5,15 @@
     {
         public void Look(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is Animal a)
+            if (c.CurrentTarget is IInspectable inspectable)
             {
-                UI.ShowPlayerAction(a.GetDescription());
-            }
-            else if (c.CurrentTarget is Npc n)
-            {
-                UI.ShowPlayerAction(n.GetDescription());
-                string eyeBodyLanguage = DialogFactory.NpcEyeBehavior(n);
-                UI.Narrate($"'{eyeBodyLanguage}'");
+                UI.ShowPlayerAction(inspectable.GetDescription());
+
+                if (inspectable is Npc n)
+                {
+                    string eyeBodyLanguage = DialogFactory.NpcEyeBehavior(n);
+                    UI.Narrate($"'{eyeBodyLanguage}'");
+                }
             }
             else
             {
@@ -80,8 +80,8 @@
                 int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1,4);
                 target.TakeDamage(damage);
 
-                // Only enter combat if the target is capable of fighting back!
-                if (target is IAttackable combatant)
+                // Only enter combat if the target is capable of fighting back! and alive
+                if (target.IsAlive && target is IAttackable combatant)
                 {
                     combatant.EnterCombat(c.Player);
                 }

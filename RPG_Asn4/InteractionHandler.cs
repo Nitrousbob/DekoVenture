@@ -32,9 +32,10 @@
             
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
             int exitOption = optionNumber; //  adds the final selection
-            UI.Narrate($"I. View Inventory.");
+            
             UI.Narrate($"{waitOption}. Wait a moment.");
-            UI.Narrate($"{exitOption}. Back to Main Menu.");
+            UI.Narrate($"{exitOption}. Exit Game.");
+            UI.Narrate($"(I)nventory ");
 
             while (true)
             {
@@ -87,6 +88,11 @@
                         else
                         {
                             target.OnInteract(player);
+                            if (target is Enemy enemy && !enemy.IsAlive && !enemy.HasLoot())
+                            {
+                                zone.CurrentLocation.Interactables.Remove(enemy);
+                                UI.Narrate($"{enemy.Name}'s remains fade away.");
+                            }
                         }
                         return true;
                     }

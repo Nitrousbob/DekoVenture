@@ -129,7 +129,7 @@
         {
             if (StateMachine.CurrentState != CombatState && IsAlive)
             {
-                CurrentPlayer = player;
+                //CurrentPlayer = player;
                 StateMachine.ChangeState(CombatState);
             }
         }
