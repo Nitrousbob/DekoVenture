@@ -1,6 +1,6 @@
 namespace DekoVenture
 {
-public class SecretNpc : Npc, ISecretKeeper
+    public class SecretNpc : Npc, ISecretKeeper
     {
         public string Secret { get; set; }
 
@@ -20,8 +20,8 @@ public class SecretNpc : Npc, ISecretKeeper
     //this SecretMiser wants something for their secrets
     public class SecretMiser : SecretNpc
     {
-        public string RequiredItemName {get; set; }
-        
+        public string RequiredItemName { get; set; }
+
         public SecretMiser(string name, int health, string secret, string requiredItemName) : base(name, health, secret)
         {
             RequiredItemName = requiredItemName;

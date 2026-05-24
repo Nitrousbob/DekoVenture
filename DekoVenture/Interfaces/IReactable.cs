@@ -8,5 +8,5 @@ namespace DekoVenture
         string OnFlirtedWith();
         string OnFartedAt();
     }
-    
+
 }

@@ -10,7 +10,7 @@ namespace DekoVenture
             Playing,
             Exit,
         }
-        
+
         public static Game? CurrentGame { get; private set; }
         public Zone? CurrentZone { get; private set; }
         //this colormode was for getting the game class working with the clr class
@@ -44,7 +44,7 @@ namespace DekoVenture
                         ShowMainMenu();
                         break;
                     case GameState.Playing:
-                    PlayGame();
+                        PlayGame();
                         break;
                 }
             }
@@ -90,7 +90,7 @@ namespace DekoVenture
             UI.Narrate("--- Entering Game World ---");
 
             CurrentZone = WorldBuilder.CreateStartingZone(); //create the starting zone and describe it
-            
+
             bool inWorld = true;
             while (inWorld)
             {
@@ -103,10 +103,10 @@ namespace DekoVenture
                     player = null;
                 }
             }
-            
+
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
         }
-        
+
         public void CreatePlayer()
         {
             string name = TakeInput.GetPlayerName();
@@ -143,28 +143,29 @@ namespace DekoVenture
             for (int i = 0; i < files.Length; i++)
             {
 
-                UI.ShowListItem($"{i + 1}. {Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
+                UI.ShowListNumber($"{i + 1}.");
+                UI.ShowNpc($"{Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
             }
 
             int choice = TakeInput.PromptIntRange("Enter the number of the player you want to load: ", 1, files.Length);
 
-                string selectedFile = files[choice - 1]; //This gets the file path of the selected player based on the user's input.
+            string selectedFile = files[choice - 1]; //This gets the file path of the selected player based on the user's input.
 
-                try
+            try
+            {
+                string jsonString = File.ReadAllText(selectedFile); //This reads the content of the selected file as a string.
+                Player? loadedPlayer = JsonSerializer.Deserialize<Player>(jsonString); //This attempts to deserialize the JSON string into a Player object.
+                if (loadedPlayer != null)
                 {
-                    string jsonString = File.ReadAllText(selectedFile); //This reads the content of the selected file as a string.
-                    Player? loadedPlayer = JsonSerializer.Deserialize<Player>(jsonString); //This attempts to deserialize the JSON string into a Player object.
-                    if (loadedPlayer != null)
-                    {
-                        player = loadedPlayer;
-                        UI.Narrate($"Player loaded successfully");
-                        UI.ShowPlayerInfo(player); //This shows the loaded player's information after successful loading.
-                    }
+                    player = loadedPlayer;
+                    UI.Narrate($"Player loaded successfully");
+                    UI.ShowPlayerInfo(player); //This shows the loaded player's information after successful loading.
                 }
-                catch (Exception e)
-                {
-                    UI.ShowError($"Error loading player data: {e.Message}");
-                }
+            }
+            catch (Exception e)
+            {
+                UI.ShowError($"Error loading player data: {e.Message}");
+            }
 
         }
 
@@ -195,7 +196,8 @@ namespace DekoVenture
                 string fullPath = Path.Combine(path, $"{player.Name}.json");
                 string jsonString = JsonSerializer.Serialize(player);
                 File.WriteAllText(fullPath, jsonString);
-            } catch (Exception e) 
+            }
+            catch (Exception e)
             {
                 UI.ShowError($"Save failed: {e.Message}");
             }

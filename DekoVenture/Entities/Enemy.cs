@@ -3,17 +3,17 @@ namespace DekoVenture
     public class Enemy : Actor, IAttackable, IInspectable
     {
         public string DisplayName => IsAlive ? Name : $"{Name} (loot)";
-        public List<Item> LootItems {get; set;} = new List<Item>();
-        public int GoldReward {get; set;}
+        public List<Item> LootItems { get; set; } = new List<Item>();
+        public int GoldReward { get; set; }
         public bool HasLoot()
         {
             return GoldReward > 0 || LootItems.Count > 0;
-        }  
-        public Enemy(string name, int health) : base(name, health) {}
+        }
+        public Enemy(string name, int health) : base(name, health) { }
 
         public override void OnInteract(Player player)
         {
-            
+
             UI.Narrate($"You see the {Name} in front of you.");
             bool interacting = true;
             while (interacting && IsAlive && player.IsAlive)
@@ -23,14 +23,14 @@ namespace DekoVenture
 
             if (!IsAlive)
             {
-                Loot(player);                
+                Loot(player);
                 return;
             }
         }
 
         public void Loot(Player player)
         {
-            
+
             if (HasLoot())
             {
 
@@ -70,7 +70,7 @@ namespace DekoVenture
         {
             Vitals.TakeDamage(damage);
             UI.Narrate($"You attack the {Name}! (Health: {Health})");
-            
+
             if (!IsAlive)
             {
                 UI.Narrate($"The {Name} is defeated!");
@@ -96,6 +96,6 @@ namespace DekoVenture
         }
 
 
-    
+
     }
 }

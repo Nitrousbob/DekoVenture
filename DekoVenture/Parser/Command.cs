@@ -28,9 +28,9 @@
                 UI.Narrate(talkable.GetTalkResponse());
             }
             else
-                {
-                    UI.Narrate($"{c.CurrentTarget.Name} doesn't seem to be able to talk.");
-                }
+            {
+                UI.Narrate($"{c.CurrentTarget.Name} doesn't seem to be able to talk.");
+            }
         }
 
         public void Ask(List<Token> tokens, ComContext c)
@@ -75,9 +75,9 @@
             if (c.CurrentTarget is IDestructible target && target.IsAlive)
             {
                 UI.ShowPlayerAction($"You attack {c.CurrentTarget.Name}");
-                
+
                 // Hardcoded damage for now.
-                int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1,4);
+                int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1, 4);
                 target.TakeDamage(damage);
 
                 // Only enter combat if the target is capable of fighting back! and alive
@@ -98,7 +98,7 @@
             {
                 UI.ShowPlayerAction($"You slap {reactable.Name}");
                 string reaction = reactable.OnAgitate();
-                UI.ShowPlayerAction(reaction);     
+                UI.ShowPlayerAction(reaction);
             }
             else
             {
@@ -118,7 +118,7 @@
             {
                 UI.Narrate("There I go just laughing out loud again.");
             }
-        }   
+        }
 
         public void Flirt(List<Token> tokens, ComContext c)
         {
@@ -136,7 +136,7 @@
 
         public void Fart(List<Token> tokens, ComContext c)
         {
-            if(c.CurrentTarget is IReactable reactable)
+            if (c.CurrentTarget is IReactable reactable)
             {
                 UI.ShowPlayerAction($"You break wind in their general direction");
                 string reaction = reactable.OnFartedAt();
@@ -146,15 +146,15 @@
 
         public void Give(List<Token> tokens, ComContext c)
         {
-            string itemName = tokens.Where(t => t.Name == TokenType.subject).Select(t=> t.Value).FirstOrDefault() ?? "";
-            
+            string itemName = tokens.Where(t => t.Name == TokenType.subject).Select(t => t.Value).FirstOrDefault() ?? "";
+
 
             if (string.IsNullOrWhiteSpace(itemName))
-            
-                {
-                    UI.Narrate("Give what?");
-                    return;
-                }
+
+            {
+                UI.Narrate("Give what?");
+                return;
+            }
 
             Item? item = c.Player.Inventory.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
 
@@ -185,14 +185,14 @@
         public void Help(List<Token> tokens, ComContext c)
         {
             UI.ShowPlayerAction("Available commands: ");
-            
-            string commandList = string.Join(",",DialogFactory.lookupTable.Keys); //this lists all the commands
+
+            string commandList = string.Join(",", DialogFactory.lookupTable.Keys); //this lists all the commands
             UI.ShowPlayerAction(commandList);
-            if(c.CurrentTarget is Actor actor && actor.StateMachine.CurrentState != null)
+            if (c.CurrentTarget is Actor actor && actor.StateMachine.CurrentState != null)
             {
                 UI.Narrate($"Context: {actor.Name} is currently in the '{actor.StateMachine.CurrentState.Name}' state.");
 
-                if(actor.StateMachine.CurrentState.Name == "Combat")
+                if (actor.StateMachine.CurrentState.Name == "Combat")
                 {
                     UI.Narrate("Hint: You are in combat! Attack your target or run for your life");
                 }

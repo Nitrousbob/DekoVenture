@@ -12,8 +12,15 @@ namespace DekoVenture
 
         //---Game World and Narration
         public static void Narrate(string message) => Current.Narrate(message);
-        public static void ShowListItem(string text) => Current.ShowListItem(text);
+        public static void ShowListNumber(string text) => Current.ShowListNumber(text);
+        public static void ShowItem(string text) => Current.ShowItem(text);
+        public static void ShowNpc(string text) => Current.ShowNpc(text);
+        public static void ShowCurrencyItem(string text) => Current.ShowCurrencyItem(text);
         public static void EnemyDeath(string text) => Current.EnemyDeath(text);
+        public static void ShowLocation(string text) => Current.ShowLocation(text);
+        public static void SayLocation(string text) => Current.SayLocation(text);
+        public static void ShowTitle() => Current.ShowTitle();
+        public static void AllMenuOption(string text) => Current.AllMenuOption(text);
 
         //---Character and Interactions
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);

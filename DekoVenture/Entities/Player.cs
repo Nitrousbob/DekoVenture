@@ -5,7 +5,7 @@
         //the player has to track its own state 
         public List<Item> Inventory { get; set; } = new List<Item>();
 
-        public Player(string name, int health) : base(name, health){}
+        public Player(string name, int health) : base(name, health) { }
 
         public void ShowInventory()
         {
@@ -23,9 +23,9 @@
                     return;
                 }
 
-                if(int.TryParse(input, out int choice) && choice > 0 && choice <= displayList.Count)
-                    {
-                    var selectedItem = displayList[choice -1].item;
+                if (int.TryParse(input, out int choice) && choice > 0 && choice <= displayList.Count)
+                {
+                    var selectedItem = displayList[choice - 1].item;
                     bool wasUsed = selectedItem.Use(this);
 
                     if (wasUsed)
@@ -39,9 +39,9 @@
                     return;
                 }
                 UI.ShowError("Invalid Choice.");
-            }    
+            }
         }
-        
+
         public override void OnInteract(Player player)
         {
             throw new NotImplementedException();

@@ -4,5 +4,5 @@ namespace DekoVenture
     {
         void EnterCombat(Player player);
     }
-    
+
 }

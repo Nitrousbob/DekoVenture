@@ -41,7 +41,7 @@ namespace DekoVenture
         {
             Vitals.TakeDamage(damage);
             UI.Narrate($"You attack the {Name}! (Health: {Health})");
-            
+
             if (!IsAlive)
             {
                 UI.Narrate($"The {Name} is destroyed!");
@@ -58,9 +58,9 @@ namespace DekoVenture
             _door = door;
         }
 
-        public void Enter(){}
-        public void Update(){}
-        public void Exit(){}
+        public void Enter() { }
+        public void Update() { }
+        public void Exit() { }
     }
 
     public class DoorOpenState : IState
@@ -71,9 +71,9 @@ namespace DekoVenture
         {
             _door = door;
         }
-        public void Enter(){}
-        public void Update(){}
-        public void Exit(){}
+        public void Enter() { }
+        public void Update() { }
+        public void Exit() { }
     }
 
     public class DoorLockedState : IState
@@ -84,9 +84,9 @@ namespace DekoVenture
         {
             _door = door;
         }
-        public void Enter(){}
-        public void Update(){}
-        public void Exit(){}
+        public void Enter() { }
+        public void Update() { }
+        public void Exit() { }
     }
     public class BrittleDoor : Door
     {
@@ -98,7 +98,7 @@ namespace DekoVenture
         {
             Vitals.TakeDamage(damage);
             UI.Narrate($"You chop at the {Name}! (Health: {Health})");
-            
+
             if (!IsAlive)
             {
                 UI.Narrate("The door shatters to pieces!");

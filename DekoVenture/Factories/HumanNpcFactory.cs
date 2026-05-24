@@ -77,13 +77,13 @@ namespace DekoVenture
         {
             //create the return type, the List
             var group = new List<IInteractable>();
-            
+
             //make count many
             for (int i = 0; i < count; i++)
-                {
-                    group.Add(GetStandardTier(1));
-                }
-                return group;
+            {
+                group.Add(GetStandardTier(1));
+            }
+            return group;
         }
 
         private static bool RollHasEyes(int chanceEyes)

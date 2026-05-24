@@ -21,7 +21,7 @@ namespace DekoVenture
         public void Render(Player player)
         {
             Clr.DGr("[");
-            if (player.Vitals !=null && player.Vitals.ActiveEffects.Any())
+            if (player.Vitals != null && player.Vitals.ActiveEffects.Any())
             {
                 Clr.R("Status");
                 for (int i = 0; i < player.Vitals.ActiveEffects.Count; i++)
@@ -29,7 +29,7 @@ namespace DekoVenture
                     var effect = player.Vitals.ActiveEffects[i];
                     Clr.O($"{effect.Type}({effect.Duration})");
 
-                    if (i < player.Vitals.ActiveEffects.Count -1)
+                    if (i < player.Vitals.ActiveEffects.Count - 1)
                     {
                         Clr.DGr(",");
                     }
@@ -70,5 +70,5 @@ namespace DekoVenture
             Clr.Y($"Gold:{player.Gold}");
             Clr.DY("]");
         }
-}
+    }
 }

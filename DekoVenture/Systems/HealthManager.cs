@@ -11,16 +11,16 @@ namespace DekoVenture
 
     public class StatusEffect
     {
-        public EffectType Type { get; set;}
+        public EffectType Type { get; set; }
         public int Duration { get; set; }
-        public int Magnitude {get; set; }
-        public StatusEffect(){}
+        public int Magnitude { get; set; }
+        public StatusEffect() { }
         public StatusEffect(EffectType type, int duration, int magnitude)
         {
             Type = type;
             Duration = duration;
             Magnitude = magnitude;
-        
+
         }
     }
 
@@ -28,8 +28,8 @@ namespace DekoVenture
     {
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
-        public List<StatusEffect> ActiveEffects {get; set;} = new List<StatusEffect>();
-        public HealthManager(){}
+        public List<StatusEffect> ActiveEffects { get; set; } = new List<StatusEffect>();
+        public HealthManager() { }
         public HealthManager(int maxHealth)
         {
             MaxHealth = Math.Max(1, maxHealth);
@@ -63,13 +63,13 @@ namespace DekoVenture
         {
             ActiveEffects.RemoveAll(e => e.Type == type);
         }
-        
+
         public void TickEffects()
         {
             for (int i = ActiveEffects.Count - 1; i >= 0; i--)
             {
                 var effect = ActiveEffects[i];
-                
+
                 if (effect.Type == EffectType.Poison || effect.Type == EffectType.Bleeding)
                 {
                     TakeDamage(effect.Magnitude);

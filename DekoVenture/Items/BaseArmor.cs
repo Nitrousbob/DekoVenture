@@ -2,7 +2,7 @@ namespace DekoVenture
 {
     public abstract class BaseArmor : Item, IArmor
     {
-                public int DefenseValue {get; protected set;}
+        public int DefenseValue { get; protected set; }
         public BaseArmor(string name, string description, int defenseValue) : base(name, description)
         {
             DefenseValue = defenseValue;

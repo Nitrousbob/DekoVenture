@@ -57,6 +57,8 @@ namespace DekoVenture
         //Dark Gray
         public static void DGr() => Clr.Rgb(100, 100, 100);
         public static void DGr(string message) => RgbWrite(100, 100, 100, message);
+        public static void LGr() => Clr.Rgb(200, 200, 200);
+        public static void LGr(string message) => RgbWrite(200, 200, 200, message);
         //Light Green
         public static void LG() => Clr.Rgb(172, 255, 135);
         public static void LG(string message) => RgbWrite(172, 255, 135, message);
@@ -72,7 +74,7 @@ namespace DekoVenture
         //Blue
         public static void B() => Clr.Rgb(23, 105, 188);
         public static void B(string message) => RgbWrite(23, 105, 188, message);
-        //Dark Blue
+        //DarkBlue
         public static void DB() => Clr.Rgb(48, 52, 255);
         public static void DB(string message) => RgbWrite(48, 52, 255, message);
         public static void LP() => Clr.Rgb(220, 50, 235);
@@ -81,7 +83,6 @@ namespace DekoVenture
         public static void P(string message) => RgbWrite(167, 27, 228, message);
         public static void DP() => Rgb(103, 17, 140);
         public static void DP(string message) => RgbWrite(103, 17, 140, message);
-
         public static void Pk() => Rgb(255, 118, 198);
         public static void Pk(string message) => RgbWrite(255, 118, 198, message);
         public static void DPk() => Rgb(194, 0, 113);

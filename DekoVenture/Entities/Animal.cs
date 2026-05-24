@@ -6,9 +6,9 @@
         public bool HasEyes { get; private set; }
         public Player? CurrentPlayer { get; set; }
 
-        public AnimalForagingState ForagingState {get; private set;}
-        public AnimalSleepingState SleepingState {get; private set;}
-        public AnimalInteractingState InteractingState {get; private set;}
+        public AnimalForagingState ForagingState { get; private set; }
+        public AnimalSleepingState SleepingState { get; private set; }
+        public AnimalInteractingState InteractingState { get; private set; }
 
 
         public Animal(string name, int health, string species, bool hasEyes) : base(name, health)
@@ -37,10 +37,10 @@
         {
             if (!canInteract)
             {
-            UI.Narrate($"{Name} signals that this is not a game.");
-            return;
+                UI.Narrate($"{Name} signals that this is not a game.");
+                return;
             }
-                             
+
             CurrentPlayer = player;
             StateMachine.ChangeState(InteractingState);
             StateMachine.Update();
@@ -48,8 +48,8 @@
 
         public string OnAgitate()
         {
-                BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
-                return $"{Name} looks at you with shock and anger.";
+            BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+            return $"{Name} looks at you with shock and anger.";
         }
 
         public string OnLaughedAt()
@@ -70,7 +70,7 @@
 
     public class SecretAnimal : Animal
     {
-        public Item HiddenItem {get; set;}
+        public Item HiddenItem { get; set; }
         private bool _secretRevealed = false;
 
         public SecretAnimal(string name, int health, string species, bool hasEyes, Item hiddenItem) : base(name, health, species, hasEyes)
@@ -86,7 +86,7 @@
                 Game.CurrentGame?.CurrentZone?.CurrentLocation.Interactables.Add(HiddenItem);
                 return $"{base.GetPetResponse()}\n{Name} happily paws at the dirt, revealing a {HiddenItem.Name}.";
             }
-                return $"base.GetPetResponse()";
+            return $"base.GetPetResponse()";
         }
     }
 }

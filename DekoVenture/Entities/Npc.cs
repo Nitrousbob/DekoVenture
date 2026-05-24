@@ -9,11 +9,11 @@
         public NpcCombatState CombatState { get; private set; }
 
         //These are flavor text properties for Idle and Busy States
-        public string IdleAction {get; set;}
-        public string BusyStart {get; set;}
-        public string BusyAction {get; set;}
-        public string BusyEnd {get; set;}
-        public string BusyRefusal {get; set;}
+        public string IdleAction { get; set; }
+        public string BusyStart { get; set; }
+        public string BusyAction { get; set; }
+        public string BusyEnd { get; set; }
+        public string BusyRefusal { get; set; }
         public bool HasEyes { get; private set; }
         public int InteractionCount { get; set; } = 0; // This property will track how many times the NPC has greeted the player.
         public Npc(string name, int health, bool hasEyes) : base(name, health)
@@ -42,7 +42,7 @@
                 UI.Narrate($"{Name} does not want to interact with you right now.");
                 return;
             }
-            
+
             if (StateMachine.CurrentState == BusyState)
             {
                 UI.Narrate($"{Name} {BusyRefusal}");
@@ -76,7 +76,7 @@
             {
                 return "I'm all out of responses now too";
             }
-            
+
         }
         public string GetQuestionResponse()
         {
@@ -135,5 +135,5 @@
         }
     }
 
-    
+
 }

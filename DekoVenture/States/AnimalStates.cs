@@ -2,19 +2,19 @@ namespace DekoVenture
 {
     public class AnimalForagingState : IState
     {
-    private readonly Animal animal;
-    public string Name => "Foraging";
+        private readonly Animal animal;
+        public string Name => "Foraging";
 
-    public AnimalForagingState(Animal animal)
-    {
-        this.animal = animal;
-    }
+        public AnimalForagingState(Animal animal)
+        {
+            this.animal = animal;
+        }
 
-    public void Enter() {}
-    public void Update()
+        public void Enter() { }
+        public void Update()
         {
             int chance = Random.Shared.Next(100);
-            if(chance < 20) //20 percent chance to go to sleep
+            if (chance < 20) //20 percent chance to go to sleep
             {
                 animal.StateMachine.ChangeState(animal.SleepingState);
             }
@@ -23,7 +23,7 @@ namespace DekoVenture
                 UI.ShowNpcAction($"{animal.Name} is foraging.");
             }
         }
-        public void Exit() {}
+        public void Exit() { }
     }
 
     public class AnimalSleepingState : IState
@@ -73,7 +73,7 @@ namespace DekoVenture
         }
         public void Update()
         {
-            if(animal.CurrentPlayer == null)
+            if (animal.CurrentPlayer == null)
             {
                 animal.StateMachine.ChangeState(animal.ForagingState);
                 return;
@@ -86,8 +86,7 @@ namespace DekoVenture
             animal.CurrentPlayer = null;
             animal.StateMachine.ChangeState(animal.ForagingState);
         }
-        public void Exit() {}
+        public void Exit() { }
     }
 }
 
-     

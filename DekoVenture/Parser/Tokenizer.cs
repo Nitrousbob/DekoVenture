@@ -18,7 +18,7 @@
                 {
                     list.Add(new Token(TokenType.preposition, parts[i]));
                 }
-                else if (i > 0 && (parts[i-1] == "to" || parts[i-1] == "with" || parts[i-1] == "about" || parts[i-1] == "at"))
+                else if (i > 0 && (parts[i - 1] == "to" || parts[i - 1] == "with" || parts[i - 1] == "about" || parts[i - 1] == "at"))
                 {
                     list.Add(new Token(TokenType.target, parts[i]));
                 }
@@ -27,7 +27,7 @@
                     list.Add(new Token(TokenType.subject, parts[i]));
                 }
             }
-                return list.Count > 0 ? list : null;
+            return list.Count > 0 ? list : null;
         }
     }
 }

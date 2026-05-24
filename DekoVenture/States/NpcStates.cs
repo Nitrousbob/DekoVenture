@@ -10,7 +10,7 @@ namespace DekoVenture
             this.npc = npc;
         }
 
-        public void Enter() {}
+        public void Enter() { }
         public void Update()
         {
             int chance = Random.Shared.Next(100);
@@ -23,9 +23,9 @@ namespace DekoVenture
                 UI.ShowNpcAction($"{npc.Name} {npc.IdleAction}.");
             }
         }
-        public void Exit() {}
-    
-        
+        public void Exit() { }
+
+
     }
 
     public class NpcBusyState : IState
@@ -54,7 +54,7 @@ namespace DekoVenture
                 UI.ShowNpcAction($"{npc.Name} {npc.BusyAction}");
             }
         }
-        public void Exit() {}
+        public void Exit() { }
     }
 
     public class NpcTalkingState : IState
@@ -86,11 +86,11 @@ namespace DekoVenture
             {
                 isTalking = DialogFactory.HandleDialogTurn(npc, npc.CurrentPlayer);
             }
-            
+
             npc.CurrentPlayer = null; // Clear the player reference
             npc.StateMachine.ChangeState(npc.IdleState); // Fall back to idle
         }
 
-        public void Exit(){}
+        public void Exit() { }
     }
 }

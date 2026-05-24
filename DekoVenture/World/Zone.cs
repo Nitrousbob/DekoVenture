@@ -23,8 +23,8 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public Location CurrentLocation { get; set; }
-        public Weather CurrentWeather {get; private set;}
-        public TimeOfDay CurrentTime {get; private set;}
+        public Weather CurrentWeather { get; private set; }
+        public TimeOfDay CurrentTime { get; private set; }
         private int turnsToTimeChange;
         public Zone(string name, Location startingLocation)
         {
@@ -39,7 +39,7 @@
         {
             string? environmentMessage = UpdateTimeAndWeather();
             //local is not a wide enough catch for what could be there.
-            foreach(IInteractable local in CurrentLocation.Interactables)
+            foreach (IInteractable local in CurrentLocation.Interactables)
             {
                 local.TickInteractionCooldown();
 
@@ -55,7 +55,7 @@
 
         public bool Describe(Player player)
         {
-            UI.Narrate($"{CurrentLocation.Name}");
+            UI.SayLocation($"You are at the {CurrentLocation.Name}, ");
             string? envMessage = TickTurn(player);  //bring the world alive
             if (!string.IsNullOrEmpty(envMessage))
             {
@@ -72,18 +72,18 @@
         private string? UpdateTimeAndWeather()
         {
             turnsToTimeChange--;
-            if(turnsToTimeChange <= 0)
+            if (turnsToTimeChange <= 0)
             {
                 //Advance time of day to the next phase, looping back to morning (0) after Night (3)
                 CurrentTime = (TimeOfDay)(((int)CurrentTime + 1) % 4);
                 turnsToTimeChange = 4;  //reset the counter for the next time phase
 
-                if(Random.Shared.Next(100) < 40)
+                if (Random.Shared.Next(100) < 40)
                 {
                     Array weatherValues = Enum.GetValues(typeof(Weather));
                     Weather oldWeather = CurrentWeather;
                     CurrentWeather = (Weather)weatherValues.GetValue(Random.Shared.Next(weatherValues.Length))!;
-                    if(oldWeather != CurrentWeather)
+                    if (oldWeather != CurrentWeather)
                     {
                         return GetWeatherChangeMessage(); //exit early so we dont spam both a time and weather message at the exact same time.
                     }
