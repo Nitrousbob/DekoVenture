@@ -16,6 +16,8 @@
         public string BusyRefusal { get; set; }
         public bool HasEyes { get; private set; }
         public int InteractionCount { get; set; } = 0; // This property will track how many times the NPC has greeted the player.
+        public string AttackReaction {get; set;}
+        public int FightChance{get; set; } = 50;
         public Npc(string name, int health, bool hasEyes) : base(name, health)
         {
             HasEyes = hasEyes;
@@ -129,7 +131,21 @@
         {
             if (StateMachine.CurrentState != CombatState && IsAlive)
             {
-                //CurrentPlayer = player;
+                
+                UI.NpcTalkText($"<LGr>{Name}</LGr> says: `{AttackReaction}");
+
+                int roll = Random.Shared.Next(100);
+
+                if (roll >= FightChance)
+                {
+                    UI.ShowNpcAction($"{Name} runs away!");
+                    BlockInteraction(3);  //this will not allow interaction, next best thing
+                    CurrentPlayer = null;
+                    StateMachine.ChangeState(BusyState);
+                    return;
+                }
+
+                CurrentPlayer = player;
                 StateMachine.ChangeState(CombatState);
             }
         }

@@ -37,7 +37,7 @@ namespace DekoVenture
         }
         public void ShowHelp(string text)
         {
-            Clr.W(text + "\n");
+            WriteWithMarkup(text + "\n", Clr.Gr);
         }
         public void ShowError(string message)
         {

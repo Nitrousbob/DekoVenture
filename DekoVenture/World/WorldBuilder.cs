@@ -15,7 +15,8 @@ namespace DekoVenture
                 BusyStart = "pulls out an empty lotion bottle.",
                 BusyAction = "tries to squeeze a final drop of lotion from the bottle.",
                 BusyEnd = "sighs and puts the empty bottle away.",
-                BusyRefusal = "is too busy lamenting his dry skin to talk."
+                BusyRefusal = "is too busy lamenting his dry skin to talk.",
+                AttackReaction = "What are you? About a size 14?",
             };
             clearing.Interactables.Add(miser);
             //Add a couple items to interact with to test
@@ -31,7 +32,8 @@ namespace DekoVenture
                 BusyStart = "pulls his collar up.",
                 BusyAction = "darts his eyes back and forth into the shadows.",
                 BusyEnd = "relaxes slightly and lowers his collar.",
-                BusyRefusal = "is too paranoid to speak to you right now."
+                BusyRefusal = "is too paranoid to speak to you right now.",
+                AttackReaction = "I knew you looked like trouble.",
             };
             darkWoods.Interactables.Add(snitch);
             darkWoods.AddExit("south", clearing);

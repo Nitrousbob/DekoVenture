@@ -47,6 +47,7 @@ namespace DekoVenture
                     npc.BusyAction = "does the 'Walk the Dog' trick with their yo-yo.";
                     npc.BusyEnd = "puts the yo-yo away.";
                     npc.BusyRefusal = "is too focused on their yo-yo to talk right now.";
+                    npc.AttackReaction = "Keep your mitts off the merchandise, space cowboy!";
                     break;
                 case 1:
                     npc.IdleAction = "stares up at the sky.";
@@ -54,6 +55,7 @@ namespace DekoVenture
                     npc.BusyAction = "flips a page in their book, reading intently.";
                     npc.BusyEnd = "snaps their book shut and pockets it.";
                     npc.BusyRefusal = "is too engrossed in their book to talk right now.";
+                    npc.AttackReaction = "";
                     break;
                 case 2:
                     npc.IdleAction = "whistles a quiet tune.";
@@ -61,6 +63,7 @@ namespace DekoVenture
                     npc.BusyAction = "rolls the coin gracefully across their knuckles.";
                     npc.BusyEnd = "snatches the coin from the air and puts it away.";
                     npc.BusyRefusal = "is too busy practicing a coin trick to talk right now.";
+                    npc.AttackReaction = "Do I look like a malfunctioning vending machine to you?";
                     break;
                 case 3:
                     npc.IdleAction = "kicks a pebble on the ground.";
@@ -68,6 +71,7 @@ namespace DekoVenture
                     npc.BusyAction = "whittles away at the piece of wood.";
                     npc.BusyEnd = "blows the sawdust off their carving and puts it away.";
                     npc.BusyRefusal = "is too focused on whittling to talk right now.";
+                    npc.AttackReaction = "Time to recalibrate your face.";
                     break;
             }
         }

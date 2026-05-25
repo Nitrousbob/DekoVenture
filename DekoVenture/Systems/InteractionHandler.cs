@@ -46,6 +46,24 @@
                 return true;
             }
         }
+
+        private class MapCommand : IInteractionCommand
+        {
+            private readonly Zone zone;
+            public MapCommand(Zone zone)
+            {
+                this.zone = zone;
+            }
+
+            public bool Execute()
+            {
+                Map displayMap = new Map(zone);
+                MapDisplay.Show(displayMap);
+                return true;
+            }
+        }
+
+
         public static bool InteractWith(Zone zone, Player player)
         {
             var targets = zone.CurrentLocation.Interactables;
@@ -80,8 +98,12 @@
                 string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
                 if (input == "h" || input == "help")
                 {
-                    UI.ShowHelp("\n[ e(X)it, (I)nventory, (H)elp ]");
+                    UI.ShowHelp("\n[ e(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp ]");
                     return true;
+                }
+                if (input == "m" || input == "map")
+                {
+                    return new MapCommand(zone).Execute();
                 }
                 if (input == "x" || input == "exit")
                 {

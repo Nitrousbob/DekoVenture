@@ -26,14 +26,17 @@ A `Location` is not the whole world.
 
 A `Zone` is the container that tracks the current location, weather, time of day, and turn updates.
 
+We use a **Hybrid Overworld/Interior System** (like classic Zelda or Pokemon). 
 So the basic relationship is:
 
 ```text
-Zone
-  owns CurrentLocation
-    which is a Location
-      which owns Interactables
-      which owns Exits to other Locations
+Zone (The Overworld Map)
+  owns MapGrid[,] of Tiles
+    Tile (X, Y)
+      owns EmptyGround (default Location for wandering outside)
+      owns PointOfInterest (optional Interior Location, e.g. a Cabin)
+        which owns Interactables
+        which owns Exits to other Interior Locations
 ```
 
 Another way to think about it:
