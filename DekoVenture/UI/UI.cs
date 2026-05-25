@@ -21,6 +21,7 @@ namespace DekoVenture
         public static void SayLocation(string text) => Current.SayLocation(text);
         public static void ShowTitle() => Current.ShowTitle();
         public static void AllMenuOption(string text) => Current.AllMenuOption(text);
+        public static void ShowMagnitude(string text) => Current.ShowMagnitude(text);
 
         //---Character and Interactions
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);

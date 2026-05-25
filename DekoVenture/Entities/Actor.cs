@@ -40,12 +40,12 @@
             }
 
             Vitals.TakeDamage(amount);
-            UI.ShowNpcAction($"{Name} took {amount} damage. Remaining health: {Health}");
+            UI.ShowPlayerAction($"{Name} took <R>{amount}</R> damage.");//removed remaining health, its in the status bar now
         }
         public int Heal(int amount)
         {
             int healed = Vitals.Heal(amount);
-            UI.ShowNpcAction($"{Name} healed {amount} health. Current health: {Health}");
+            UI.ShowPlayerAction($"{Name} healed <W>{amount}</W> health."); //removed remaining health, its in the status bar now
             return healed;
         }
         public void BlockInteraction(int turns)

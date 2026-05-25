@@ -113,7 +113,10 @@
                         }
                         else if (target is Item item)
                         {
-                            UI.ShowPlayerAction($"You picked up {item.Quantity}x {item.Name}.");
+                            UI.AllMenuOption($"You picked up ");
+                            UI.ShowMagnitude($"{item.Quantity}x ");
+                            UI.ShowItem($"{item.Name}.");
+
 
                             var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
                             if (existing != null)

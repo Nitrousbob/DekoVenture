@@ -33,6 +33,8 @@ namespace DekoVenture
             Add("flirt", c.Flirt);
             Add("fart", c.Fart);
             Add("give", c.Give);
+            Add("inventory", c.Inventory);
+            Add("i", c.Inventory);
         }
     }
 }

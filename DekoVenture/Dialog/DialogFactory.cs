@@ -102,7 +102,7 @@ namespace DekoVenture
             {
                 foreach (Token token in ast)
                 {
-                    UI.ShowListNumber($"{token.Name}: {token.Value}");
+                    UI.ShowText($"{token.Name}: {token.Value}");
                 }
             }
 

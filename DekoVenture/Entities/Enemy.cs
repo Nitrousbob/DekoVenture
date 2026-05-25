@@ -37,7 +37,7 @@ namespace DekoVenture
                 if (GoldReward > 0)
                 {
                     player.Gold += GoldReward;
-                    UI.ShowPlayerAction($"You loot {GoldReward} gold from {Name}.");
+                    UI.ShowPlayerAction($"You loot <G>{GoldReward}</G> gold from <P>{Name}</P>.");
                     GoldReward = 0;  // Set to 0 to indicate it's been looted
                 }
 
@@ -55,7 +55,7 @@ namespace DekoVenture
                             player.Inventory.Add(item);  // Add to inventory
                         }
 
-                        UI.ShowPlayerAction($"You loot {item.Name}. ");
+                        UI.ShowPlayerAction($"You loot <Y>{item.Name}</Y>. ");
                         LootItems.Remove(item); // Remove from loot after adding to inventory
                         if (LootItems.Count == 0)
                         {
@@ -81,7 +81,7 @@ namespace DekoVenture
         {
             UI.Narrate($"The {Name} comes at you bro.");
             int damage = EquippedWeapon != null ? EquippedWeapon.GetDamage() : Random.Shared.Next(1, 4);
-            UI.ShowNpcAction($"{Name} attacks {player.Name} for {damage} damage!");
+            UI.ShowNpcAction($"{Name} attacks {player.Name} for <r>{damage}</r> damage!");
             player.TakeDamage(damage);
         }
 

@@ -22,6 +22,7 @@ namespace DekoVenture
         void SayLocation(string text);
         void ShowLocation(string text);
         void AllMenuOption(string text);
+        void ShowMagnitude(string text);
     
     }
 }

@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace DekoVenture
 {
     public class TerminalDisplay : IDisplay
@@ -30,7 +32,7 @@ namespace DekoVenture
         }
         public void EnemyDeath(string text)
         {
-            Clr.DR(text + "\n");
+            WriteWithMarkup(text + "\n", Clr.DR);
         }
         public void ShowHelp(string text)
         {
@@ -62,11 +64,11 @@ namespace DekoVenture
         }
         public void ShowPlayerAction(string actionText)
         {
-            Clr.DB(actionText + "\n");
+            WriteWithMarkup(actionText + "\n", Clr.W);
         }
         public void ShowNpcAction(string actionText)
         {
-            Clr.P(actionText + "\n");
+            WriteWithMarkup(actionText + "\n", Clr.P);
         }
         public void ShowPlayerInfo(Player player)
         {
@@ -114,7 +116,51 @@ namespace DekoVenture
         {
             Clr.W(text);
         }
+        public void ShowMagnitude(string text)
+        {
+            Clr.LB(text);
+        }
     
-    }
+        private void WriteWithMarkup(string text, System.Action defaultColorAction)
+        {
+            if(string.IsNullOrEmpty(text)) return;
+            
+            string[] parts = Regex.Split(text, @"(<[a-zA-Z]+>|</[a-zA-Z]+>|\*)");
 
+            defaultColorAction();//set base color for the current ui element
+            bool isAsteriskYellow = false;
+            
+            foreach(var part in parts)
+            {
+                switch(part.ToLower())
+                {
+                    case"<r>":Clr.R();break;
+                    case"</r>":defaultColorAction();break;
+                    case"<g>":Clr.G();break;
+                    case"</g>":defaultColorAction();break;
+                    case"<b>":Clr.B();break;
+                    case"</b>":defaultColorAction();break;
+                    case"<y>":Clr.Y();break;
+                    case"</y>":defaultColorAction();break;
+                    case"<w>":Clr.W();break;
+                    case"</w>":defaultColorAction();break;
+                    case"<p>":Clr.P();break;
+                    case"</p>":defaultColorAction();break;
+                    case "*":
+                        isAsteriskYellow = !isAsteriskYellow;
+                        if (isAsteriskYellow) Clr.Y(); else defaultColorAction();
+                        break;
+                    case "":break;
+                    default:
+                        Console.Write(part);
+                        break;
+                } 
+            }
+
+            if(Clr.CurrentMode != ColorMode.Monochrome)
+            {
+                Console.Write("\x1b[0m"); //reset terminal colors completely at the end
+            }
+        }
+    }
 }

@@ -74,7 +74,8 @@
         {
             if (c.CurrentTarget is IDestructible target && target.IsAlive)
             {
-                UI.ShowPlayerAction($"You attack {c.CurrentTarget.Name}");
+                //UI.ShowPlayerAction($"You attack {c.CurrentTarget.Name}");
+                //this was repeated from another class
 
                 // Hardcoded damage for now.
                 int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1, 4);
@@ -210,6 +211,11 @@
                 UI.Narrate("Ending conversation...");
             }
             c.EndInteration = true;
+        }
+
+        public void Inventory(List<Token> tokens, ComContext c)
+        {
+            c.Player.ShowInventory();
         }
     }
 }

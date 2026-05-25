@@ -31,7 +31,15 @@ namespace DekoVenture
         {
             if (offeredItem == null || offeredItem.Name != RequiredItemName)
             {
-                UI.Narrate("They squint at you like information has a market price.");
+                bool hasItem = player.Inventory.Any(i => i.Name.Equals(RequiredItemName, StringComparison.OrdinalIgnoreCase));
+                if (hasItem)
+                {
+                    UI.Narrate($"They notice the {RequiredItemName} in your belongings. \"Give me that, and I'll tell you what I know.\"");
+                }
+                else
+                {
+                    UI.Narrate("They squint at you like information has a market price.");
+                }
                 return false;
             }
 

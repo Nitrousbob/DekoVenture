@@ -66,9 +66,9 @@ namespace DekoVenture
     {
         public void Render(Player player)
         {
-            Clr.DY("[");
-            Clr.Y($"Gold:{player.Gold}");
-            Clr.DY("]");
+            Clr.DGr("[");
+            Clr.G($"{player.Gold}");
+            Clr.DGr("]");
         }
     }
 }
