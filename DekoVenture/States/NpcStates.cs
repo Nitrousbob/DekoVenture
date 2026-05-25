@@ -20,12 +20,10 @@ namespace DekoVenture
             }
             else if (chance < 90) // 75% chance to do an idle action
             {
-                UI.ShowNpcAction($"{npc.Name} {npc.IdleAction}.");
+                UI.ShowNpcAction($"<LGr>{npc.Name}</LGr> {npc.IdleAction}.");
             }
         }
         public void Exit() { }
-
-
     }
 
     public class NpcBusyState : IState
@@ -40,18 +38,18 @@ namespace DekoVenture
 
         public void Enter()
         {
-            UI.Narrate($"{npc.Name} {npc.BusyStart}");
+            UI.ShowNpcAction($"<LGr>{npc.Name}</LGr> {npc.BusyStart}");
         }
         public void Update()
         {
-            if (Random.Shared.Next(100) < 20) // 20% chance to put it away
+            if (Random.Shared.Next(100) < 50) // 50% chance to put it away
             {
-                UI.Narrate($"{npc.Name} {npc.BusyEnd}.");
+                UI.ShowNpcAction($"<LGr>{npc.Name}</LGr> {npc.BusyEnd}.");
                 npc.StateMachine.ChangeState(npc.IdleState);
             }
             else
             {
-                UI.ShowNpcAction($"{npc.Name} {npc.BusyAction}");
+                UI.ShowNpcAction($"<LGr>{npc.Name}</LGr> {npc.BusyAction}");
             }
         }
         public void Exit() { }
@@ -70,7 +68,7 @@ namespace DekoVenture
         public void Enter()
         {
             string greeting = DialogFactory.GetRandomGreeting(npc);
-            UI.Narrate($"{npc.Name} says: '{greeting}'");
+            UI.NpcTalkText($"<LGr>{npc.Name}</LGr> says: '{greeting}'");
         }
 
         public void Update()

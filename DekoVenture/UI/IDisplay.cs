@@ -7,7 +7,7 @@ namespace DekoVenture
         void ShowMenuChoices(string[] choices);
         void ShowHelp(string text);
         void ShowError(string message);
-        void Narrate(string message);
+        void Narrate(string text);
         void ShowListNumber(string text);
         void ShowPlayerAction(string actionText);
         void ShowNpcAction(string actionText);
@@ -19,10 +19,11 @@ namespace DekoVenture
         void ShowCurrencyItem(string text);
         void EnemyDeath(string text);
         void ShowTitle();
-        void SayLocation(string text);
-        void ShowLocation(string text);
+        void NarrateLocation(string text);
+        void ShowLocationOption(string text);
         void AllMenuOption(string text);
         void ShowMagnitude(string text);
-    
+        void NpcTalkText(string text);
+
     }
 }

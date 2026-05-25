@@ -51,7 +51,7 @@
             var targets = zone.CurrentLocation.Interactables;
             var exits = zone.CurrentLocation.Exits.ToList();
 
-            UI.Narrate("\nYou see the following:");
+            UI.Narrate("\n<LGr>You see the following:</LGr>");
 
             int optionNumber = 1;
 
@@ -66,7 +66,7 @@
             for (int i = 0; i < exits.Count; i++)
             {
                 UI.ShowListNumber($"{optionNumber}.");
-                UI.ShowLocation($"Go {exits[i].Key} to {exits[i].Value.Name}\n");  //displays the direction token and the name.
+                UI.ShowLocationOption($"Go {exits[i].Key} to {exits[i].Value.Name}\n");  //displays the direction token and the name.
                 optionNumber++;
             }
 
@@ -74,10 +74,7 @@
             //int exitOption = optionNumber; //  adds the final selection
 
             UI.Narrate($"{waitOption}. Wait a moment.");
-            //these should be under a help or command help display
-            //UI.AllMenuOption($"e(X)it Game, ");
-            //UI.AllMenuOption($"(I)nventory ");
-
+            
             while (true)
             {
                 string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
@@ -167,7 +164,7 @@
             }
             if (target is CurrencyItem currency) //currency item inherits from Item so I need it to find this branch
             {
-                UI.ShowCurrencyItem($"{target.Name} ({currency.Amount})");
+                UI.ShowCurrencyItem($"{target.Name} (<LG>{currency.Amount}</LG>)");
             }
             else if (target is Item)
             {
@@ -175,7 +172,7 @@
             }
             else
             {
-                UI.ShowNpc($"{target.Name}{stateLabel}");
+                UI.ShowNpc($"{target.Name}<DB>{stateLabel}</DB>");
             }
         }
     }

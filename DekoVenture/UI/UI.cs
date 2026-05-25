@@ -11,14 +11,14 @@ namespace DekoVenture
         public static void ShowError(string message) => Current.ShowError(message);
 
         //---Game World and Narration
-        public static void Narrate(string message) => Current.Narrate(message);
+        public static void Narrate(string text) => Current.Narrate(text);
         public static void ShowListNumber(string text) => Current.ShowListNumber(text);
         public static void ShowItem(string text) => Current.ShowItem(text);
         public static void ShowNpc(string text) => Current.ShowNpc(text);
         public static void ShowCurrencyItem(string text) => Current.ShowCurrencyItem(text);
         public static void EnemyDeath(string text) => Current.EnemyDeath(text);
-        public static void ShowLocation(string text) => Current.ShowLocation(text);
-        public static void SayLocation(string text) => Current.SayLocation(text);
+        public static void ShowLocationOption(string text) => Current.ShowLocationOption(text);
+        public static void NarrateLocation(string text) => Current.NarrateLocation(text);
         public static void ShowTitle() => Current.ShowTitle();
         public static void AllMenuOption(string text) => Current.AllMenuOption(text);
         public static void ShowMagnitude(string text) => Current.ShowMagnitude(text);
@@ -28,6 +28,7 @@ namespace DekoVenture
         public static void ShowNpcAction(string actionText) => Current.ShowNpcAction(actionText);
         public static void ShowPlayerInfo(Player player) => Current.ShowPlayerInfo(player);
         public static void ShowInventory(List<(Item item, int count)> items) => Current.ShowInventory(items);
+        public static void NpcTalkText(string text) => Current.NpcTalkText(text);
 
         //---Generic fallback text, ya know something
         public static void ShowText(string input) => Current.ShowText(input);

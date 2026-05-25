@@ -55,7 +55,7 @@
 
         public bool Describe(Player player)
         {
-            UI.SayLocation($"You are at the {CurrentLocation.Name}, ");
+            UI.NarrateLocation($"You are at the <W>{CurrentLocation.Name}</W>, ");
             string? envMessage = TickTurn(player);  //bring the world alive
             if (!string.IsNullOrEmpty(envMessage))
             {

@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DekoVenture
 {
@@ -42,9 +43,9 @@ namespace DekoVenture
         {
             Clr.R("Error: " + message + "\n");
         }
-        public void Narrate(string message)
+        public void Narrate(string text)
         {
-            Clr.Gr(message + "\n");
+            WriteWithMarkup(text + "\n", Clr.W);
         }
         public void ShowItem(string text)
         {
@@ -54,21 +55,29 @@ namespace DekoVenture
         {
             Clr.W(text);  //this is only the number in the Lists anywhere in the game
         }
+        
         public void ShowNpc(string text)
         {
-            Clr.LB(text + "\n");
-        }
-        public void ShowCurrencyItem(string text)
-        {
-            Clr.LGr(text + "\n");
-        }
-        public void ShowPlayerAction(string actionText)
-        {
-            WriteWithMarkup(actionText + "\n", Clr.W);
+            WriteWithMarkup(text + "\n", Clr.B);
         }
         public void ShowNpcAction(string actionText)
         {
-            WriteWithMarkup(actionText + "\n", Clr.P);
+            WriteWithMarkup(actionText + "\n", Clr.Gr);
+        }
+        public void NpcTalkText(string text)
+        {
+            WriteWithMarkup(text + "\n", Clr.Gr);
+        }
+
+
+        public void ShowCurrencyItem(string text)
+        {
+            WriteWithMarkup(text + "\n", Clr.LGr);
+        }
+        
+        public void ShowPlayerAction(string actionText)
+        {
+            WriteWithMarkup(actionText + "\n", Clr.W);
         }
         public void ShowPlayerInfo(Player player)
         {
@@ -104,13 +113,13 @@ namespace DekoVenture
         {
             Clr.W(input + "\n");
         }
-        public void ShowLocation(string text)
+        public void ShowLocationOption(string text)  //for in menu display
         {
-            Clr.B(text);
+            WriteWithMarkup(text, Clr.LB);
         }
-        public void SayLocation(string text)
+        public void NarrateLocation(string text)  //for talking about the location when you get there
         {
-            Clr.B(text + "\n");
+            WriteWithMarkup(text + "\n", Clr.LB);
         }
         public void AllMenuOption(string text)
         {
@@ -138,7 +147,9 @@ namespace DekoVenture
                     case"</r>":defaultColorAction();break;
                     case"<g>":Clr.G();break;
                     case"</g>":defaultColorAction();break;
-                    case"<b>":Clr.B();break;
+                    case"<lg>":Clr.LG();break;
+                    case"</lg>":defaultColorAction();break;
+                    case "<b>":Clr.B();break;
                     case"</b>":defaultColorAction();break;
                     case"<y>":Clr.Y();break;
                     case"</y>":defaultColorAction();break;
@@ -146,6 +157,12 @@ namespace DekoVenture
                     case"</w>":defaultColorAction();break;
                     case"<p>":Clr.P();break;
                     case"</p>":defaultColorAction();break;
+                    case"<db>":Clr.DB();break;
+                    case"</db>":defaultColorAction();break;
+                    case"<gr>":Clr.Gr();break;
+                    case "</gr>":defaultColorAction();break;
+                    case "<lgr>":Clr.LGr();break;
+                    case"</lgr>":defaultColorAction();break;
                     case "*":
                         isAsteriskYellow = !isAsteriskYellow;
                         if (isAsteriskYellow) Clr.Y(); else defaultColorAction();
