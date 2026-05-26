@@ -26,6 +26,10 @@ namespace DekoVenture
             Location darkWoods = new Location("Dark Woods", "The trees are thick and ominous, The light barely pierces the canopy");
             clearing.AddExit("north", darkWoods); //have to add the exit of the previous after the next room is built!
             darkWoods.Interactables.Add(ItemFactory.CreateLotion(1));
+            darkWoods.Interactables.Add(ItemFactory.CreatePoison(1));
+            darkWoods.Interactables.Add(ItemFactory.CreateAntidote(1));
+            darkWoods.Interactables.Add(ItemFactory.CreateBleeding(1));
+            darkWoods.Interactables.Add(ItemFactory.CreateBandage(2));
             var snitch = new SecretNpc("Da Snitch", 5, "That guy over there did it.")
             {
                 IdleAction = "looks around nervously",

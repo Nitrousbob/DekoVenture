@@ -7,6 +7,7 @@ namespace DekoVenture
         Blinded,
         Stunned,
         SkinsuitPrep,
+    
     }
 
     public class StatusEffect
@@ -64,6 +65,12 @@ namespace DekoVenture
             ActiveEffects.RemoveAll(e => e.Type == type);
         }
 
+        public bool IsStunned() => ActiveEffects.Any(e => e.Type == EffectType.Stunned);
+        public bool IsBlinded() => ActiveEffects.Any(e => e.Type == EffectType.Blinded);
+        public bool IsPoisoned() => ActiveEffects.Any(e => e.Type == EffectType.Poison);
+        public bool IsBleeding() => ActiveEffects.Any(e => e.Type == EffectType.Bleeding);
+
+
         public void TickEffects()
         {
             for (int i = ActiveEffects.Count - 1; i >= 0; i--)
@@ -73,12 +80,14 @@ namespace DekoVenture
                 if (effect.Type == EffectType.Poison || effect.Type == EffectType.Bleeding)
                 {
                     TakeDamage(effect.Magnitude);
+                    UI.Narrate ($"You take {effect.Magnitude} damage from {effect.Type}!");
                 }
 
                 effect.Duration--;
                 if (effect.Duration <= 0)
                 {
                     ActiveEffects.RemoveAt(i);
+                    UI.Narrate($"{effect.Type} has worn off.");
                 }
             }
         }

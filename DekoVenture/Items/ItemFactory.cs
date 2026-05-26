@@ -30,6 +30,35 @@ namespace DekoVenture
             };
         }
 
+        public static Consumable CreatePoison(int quantity = 1)
+        {
+            return new Consumable("Poison", "A dark sweet smelling liquid", 0, EffectType.Poison)
+            {
+            Quantity = quantity,
+            Apply = new List<StatusEffect>
+                {
+                    new StatusEffect(EffectType.Poison, 3, 2)
+                }
+            };
+        }
 
+        public static Consumable CreateBleeding(int quantity = 1)
+        {
+            return new Consumable("Glass shards", "A pile of broken glass", 0, EffectType.Bleeding)
+            {
+            Quantity = quantity,
+            Apply = new List<StatusEffect>
+                {
+                    new StatusEffect(EffectType.Bleeding, 3, 2)
+                }
+            };
+        }
+        public static Consumable CreateBandage(int quantity = 1)
+        {
+            return new Consumable("Bandage", "Stops Bleeding", 0, EffectType.Bleeding)
+            {
+            Quantity = quantity
+            };
+        }
     }
 }

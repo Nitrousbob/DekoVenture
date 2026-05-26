@@ -4,6 +4,7 @@ namespace DekoVenture
     {
         public int HealAmount { get; set; }
         public List<EffectType> Cures { get; set; } = new List<EffectType>();
+        public List<StatusEffect> Apply {get; set;} = new List<StatusEffect>();
         public Consumable() { }
         public Consumable(string name, string description, int healAmount = 0, params EffectType[] cures) : base(name, description)
         {
@@ -38,6 +39,15 @@ namespace DekoVenture
                     UI.Narrate($"You have been cured of the {effect} effect!");
                     used = true;
                 }
+            }
+
+            foreach (var effect in Apply)
+            {
+                //added a new effect for possible effect items that stack
+                player.Vitals.AddEffect(new StatusEffect(effect.Type, effect.Duration, effect.Magnitude));
+                UI.Narrate($"You are now affected by {effect.Type}");
+                //player.Vitals.AddEffect(effect);
+                used = true;
             }
 
             if (!used)
