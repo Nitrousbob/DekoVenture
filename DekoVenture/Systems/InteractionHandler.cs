@@ -15,7 +15,7 @@
             // List all available targets dynamically
             for (int i = 0; i < targets.Count; i++)
             {
-                UI.ShowListNumber($"{optionNumber}.");
+                UI.ShowListNumber($"{optionNumber}. ");
                 ShowTargetOption(targets[i]);
                 optionNumber++;
             }
@@ -23,7 +23,7 @@
             // List all available Exits dynamically
             for (int i = 0; i < exits.Count; i++)
             {
-                UI.ShowListNumber($"{optionNumber}.");
+                UI.ShowListNumber($"{optionNumber}. ");
                 UI.ShowLocationOption($"Go {exits[i].Key} to {exits[i].Value.Name}\n");  //displays the direction token and the name.
                 optionNumber++;
             }
@@ -135,11 +135,6 @@
                 UI.ShowError("Invalid Choice.");
             }
         }
-
-        
-
-
-        
 
         //Shows the target options and colors them appropriately
         private static void ShowTargetOption(IInteractable optiontarget)

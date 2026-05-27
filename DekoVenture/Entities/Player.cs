@@ -17,10 +17,10 @@
                 UI.ShowInventory(displayList);
                 if (displayList.Count == 0) return;
                 
-                UI.Narrate("[X] Exit");
+                UI.Narrate("X. Exit");
 
                 string input = TakeInput.GetString("Your selection: ").Trim().ToLower();
-                // We keep 'i' and 'inventory' so players can toggle the menu closed, but removed 'back' to standardize on X
+                
                 if (input == "x" || input == "exit" || input == "i" || input == "inventory")
                 {
                     return;
@@ -54,8 +54,7 @@
                     {
                         // Do nothing, letting the loop continue and redraw the list
                     }
-
-                    // Continue instead of return! This brings you back to the inventory list!
+                    // This brings you back to the inventory list!
                     continue;
                 }
                 UI.ShowError("Invalid Choice.");

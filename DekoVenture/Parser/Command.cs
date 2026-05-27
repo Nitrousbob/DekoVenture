@@ -74,9 +74,7 @@
         {
             if (c.CurrentTarget is IDestructible target && target.IsAlive)
             {
-                //UI.ShowPlayerAction($"You attack {c.CurrentTarget.Name}");
-                //this was repeated from another class
-
+                
                 // Hardcoded damage for now.
                 int damage = c.Player.EquippedWeapon != null ? c.Player.EquippedWeapon.GetDamage() : Random.Shared.Next(1, 4);
                 target.TakeDamage(damage);
@@ -198,6 +196,7 @@
                     UI.Narrate("Hint: You are in combat! Attack your target or run for your life");
                 }
             }
+            TakeInput.GetString("\nPress Enter to continue...");
         }
 
         public void Exit(List<Token> tokens, ComContext c)

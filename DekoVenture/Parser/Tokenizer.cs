@@ -11,6 +11,7 @@
             //takes the first token a makes it a verb to lookup
             list.Add(new Token(TokenType.verb, parts[0]));
 
+            //remove the
             //this takes the remaining words and adds them to the list as either a subject or an object depending on what comes before it
             for (int i = 1; i < parts.Length; i++)
             {

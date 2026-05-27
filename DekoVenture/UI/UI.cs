@@ -7,7 +7,7 @@ namespace DekoVenture
         //---System and Menu
         public static void ShowWelcomeMessage() => Current.ShowWelcomeMessage();
         public static void ShowMenuChoices(string[] choices) => Current.ShowMenuChoices(choices);
-        public static void ShowHelp(string text) => Current.ShowHelp(text);
+        //public static void ShowHelp(string text) => Current.ShowHelp(text);
         public static void ShowError(string message) => Current.ShowError(message);
 
         //---Game World and Narration
@@ -19,8 +19,8 @@ namespace DekoVenture
         public static void EnemyDeath(string text) => Current.EnemyDeath(text);
         public static void ShowLocationOption(string text) => Current.ShowLocationOption(text);
         public static void NarrateLocation(string text) => Current.NarrateLocation(text);
-        public static void ShowTitle() => Current.ShowTitle();
-        public static void AllMenuOption(string text) => Current.AllMenuOption(text);
+        //public static void ShowTitle() => Current.ShowTitle();
+        //public static void AllMenuOption(string text) => Current.AllMenuOption(text);
         
         //---Character and Interactions
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);

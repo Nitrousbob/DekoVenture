@@ -138,12 +138,12 @@ namespace DekoVenture
                 return;
             }
 
-            UI.Narrate($"\n{files.Length} available saved players: ");
+            UI.Narrate($"\n<B>{files.Length}</B> available saved players: ");
 
             for (int i = 0; i < files.Length; i++)
             {
 
-                UI.ShowListNumber($"{i + 1}.");
+                UI.ShowListNumber($"{i + 1}. ");
                 UI.ShowNpc($"{Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
             }
 
