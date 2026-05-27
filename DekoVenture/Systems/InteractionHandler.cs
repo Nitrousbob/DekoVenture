@@ -1,69 +1,7 @@
-﻿namespace DekoVenture
+﻿﻿namespace DekoVenture
 {
     public static class InteractionHandler
     {
-
-        private class InteractionContext
-        {
-            public Zone Zone { get; }
-            public Player Player { get; }
-
-            //added a convienience property to access currentlocation 
-            //as most interactions happen there but we have zone for bigger things
-            public Location CurrentLocation => Zone.CurrentLocation;
-
-            public InteractionContext(Zone zone, Player player)
-            {
-                Zone = zone;
-                Player = player;
-            }
-        }
-        private interface IInteractionCommand
-        {
-            bool Execute();
-        }
-        private class WaitCommand : IInteractionCommand
-        {
-            public bool Execute()
-            {
-                UI.Narrate("You stand quietly, watching the area.");
-                return true;
-            }
-        }
-
-        private class InventoryCommand : IInteractionCommand
-        {
-            private readonly Player player;
-
-            public InventoryCommand(Player player)
-            {
-                this.player = player;
-            }
-
-            public bool Execute()
-            {
-                player.ShowInventory();
-                return true;
-            }
-        }
-
-        private class MapCommand : IInteractionCommand
-        {
-            private readonly Zone zone;
-            public MapCommand(Zone zone)
-            {
-                this.zone = zone;
-            }
-
-            public bool Execute()
-            {
-                Map displayMap = new Map(zone);
-                MapDisplay.Show(displayMap);
-                return true;
-            }
-        }
-
-
         public static bool InteractWith(Zone zone, Player player)
         {
             var targets = zone.CurrentLocation.Interactables;
@@ -71,8 +9,10 @@
 
             UI.Narrate("\n<LGr>You see the following:</LGr>");
 
+            //start with menu option number 1
             int optionNumber = 1;
 
+            // List all available targets dynamically
             for (int i = 0; i < targets.Count; i++)
             {
                 UI.ShowListNumber($"{optionNumber}.");
@@ -91,38 +31,28 @@
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
             //int exitOption = optionNumber; //  adds the final selection
 
-            UI.Narrate($"{waitOption}. Wait a moment.");
+            UI.Narrate($"{waitOption}.Wait a moment.");
             
             while (true)
             {
-                // string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
-                // if (input == "h" || input == "help")
-                // {
-                //     UI.ShowHelp("\n[ e(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp ]");
-                //     return true;
-                // }
-                // if (input == "m" || input == "map")
                 string input = TakeInput.GetString("You selection: ").Trim().ToLower();
                 string [] inputParts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (inputParts.Length == 0) continue;
                 string command = inputParts[0];
 
-                if (command == "h" || command == "help")
+                // --- UNIVERSAL PARSER INTEGRATION ---
+                var ast = new Tokenizer().Tokenize(input);
+                if (ast != null && ast.Count > 0)
                 {
-                    UI.ShowHelp("\n[E(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp <W>inspect #</W>, <W>use #</W>]");
-                    return true;
-                }
-                if (command == "m" || command == "map")
-                {
-                    return new MapCommand(zone).Execute();
-                }
-                if (command == "x" || command == "exit")
-                {
-                    return false; // Signal to exit the game
-                }
-                if (command == "i" || command == "inventory")
-                {
-                    return new InventoryCommand(player).Execute();
+                    var verb = ast[0];
+                    if (verb.Name == TokenType.verb && DialogFactory.lookupTable.ContainsKey(verb.Value))
+                    {
+                        ComContext comCtx = new ComContext(player, null, zone);
+                        DialogFactory.lookupTable[verb.Value](ast, comCtx);
+                        
+                        if (comCtx.EndInteration) return false; // Exit game signal
+                        return true;
+                    }
                 }
 
                 //Handle "verb" + number commands (e.g. inspect 1 or use 2)
@@ -152,8 +82,10 @@
                 {
                     if (choice == waitOption)
                     {
-                        return new WaitCommand().Execute();
+                        DialogFactory.lookupTable["wait"](new List<Token>(), new ComContext(player, null, zone));
+                        return true;
                     }
+
                     else if (choice >= 1 && choice <= targets.Count)
                     {
                         var target = targets[choice - 1];
@@ -166,44 +98,7 @@
                         }
                         else if (target is Item item)
                         {
-                        //     UI.Narrate($"\nYou approach the <Y>{item.Name}</Y>.");
-                        //     int action = TakeInput.PromptIntInstant("[1] PickUp [2] Use [3] Inspect [4] Cancel\n", 1, 2, 3, 4);
-                        //     if (action == 1)
-                        //     {
-                        //         UI.ShowItem ($"You picked up <P>{item.Quantity}x</P> <Y>{item.Name}</Y>.");
-                        //         var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
-                        //         if (existing != null)
-                        //         {
-                        //             existing.Quantity += item.Quantity;
-                        //         }
-                        //         else
-                        //         {
-                        //             player.Inventory.Add(item);
-                        //         }
-
-                        //         zone.CurrentLocation.Interactables.Remove(item);
-                        //     }
-                            
-                        //     else if (action == 2)
-                        //     {
-                        //         bool wasUsed = item.Use(player);
-                        //         if(wasUsed)
-                        //         {
-                        //             item.Quantity--;
-                        //             if (item.Quantity <= 0)
-                        //             {
-                        //                 zone.CurrentLocation.Interactables.Remove(item);
-                        //             }
-                        //         }
-                        //     }
-                            
-                        //     else if (action == 3)
-                        //     {
-                        //         UI.ShowItem($"\nInspect: {item.GetDescription()}\n");
-                        //     }
-
-                        // }
-                            //Default action: Instant pickup
+                            //default action for items : pick them up
                             UI.ShowItem($"You picked up <P>{item.Quantity}x</P> <Y>{item.Name}</Y>.");
                             var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
                             if (existing != null)
@@ -240,6 +135,11 @@
                 UI.ShowError("Invalid Choice.");
             }
         }
+
+        
+
+
+        
 
         //Shows the target options and colors them appropriately
         private static void ShowTargetOption(IInteractable optiontarget)

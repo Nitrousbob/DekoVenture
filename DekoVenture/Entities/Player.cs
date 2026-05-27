@@ -9,16 +9,19 @@
 
         public void ShowInventory()
         {
-            // Map our inventory items directly to the tuple format using the new Quantity property
-            var displayList = Inventory.Select(i => (item: i, count: i.Quantity)).ToList();
-
-            UI.ShowInventory(displayList);
-            if (displayList.Count == 0) return;
-            UI.Narrate("I or 0. Back");
             while (true)
             {
+                // Map inventory items dynamically every loop so the list updates when items are used
+                var displayList = Inventory.Select(i => (item: i, count: i.Quantity)).ToList();
+
+                UI.ShowInventory(displayList);
+                if (displayList.Count == 0) return;
+                
+                UI.Narrate("[X] Exit");
+
                 string input = TakeInput.GetString("Your selection: ").Trim().ToLower();
-                if (input == "0" || input == "i" || input == "inventory" || input == "back")
+                // We keep 'i' and 'inventory' so players can toggle the menu closed, but removed 'back' to standardize on X
+                if (input == "x" || input == "exit" || input == "i" || input == "inventory")
                 {
                     return;
                 }
@@ -26,19 +29,11 @@
                 if (int.TryParse(input, out int choice) && choice > 0 && choice <= displayList.Count)
                 {
                     var selectedItem = displayList[choice - 1].item;
-                    // bool wasUsed = selectedItem.Use(this);
-
-                    // if (wasUsed)
-                    // {
-                    //     selectedItem.Quantity--;
-                    //     if (selectedItem.Quantity <= 0)
-                    //     {
-                    //         Inventory.Remove(selectedItem);
-                    //     }
-                    // }
+                    
                     UI.Narrate($"\nSelected: <Y>{selectedItem.Name}</Y>");
-                    int action = TakeInput.PromptIntInstant("[1] Use [2] Inspect [3] Cancel\n", 1,2,3);
-                    if (action == 1)
+                    string actionInput = TakeInput.GetString("1. Use \n2. Inspect \nX. Exit").Trim().ToLower();
+                    
+                    if (actionInput == "1" || actionInput == "use")
                     {
                         bool wasUsed = selectedItem.Use(this);
                         if (wasUsed)
@@ -50,12 +45,18 @@
                             }
                         }
                     }
-                    else if (action == 2)
+                    else if (actionInput == "2" || actionInput == "inspect" || actionInput == "look")
                     {
                         UI.ShowItem($"\nInspect: {selectedItem.GetDescription()}\n");
+                        TakeInput.GetString("Press Enter to continue...");
+                    }
+                    else if (actionInput == "x" || actionInput == "cancel" || actionInput == "exit")
+                    {
+                        // Do nothing, letting the loop continue and redraw the list
                     }
 
-                    return;
+                    // Continue instead of return! This brings you back to the inventory list!
+                    continue;
                 }
                 UI.ShowError("Invalid Choice.");
             }

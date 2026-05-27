@@ -145,28 +145,47 @@ namespace DekoVenture
                 {
                     case"<r>":Clr.R();break;
                     case"</r>":defaultColorAction();break;
+                    case"<dr>":Clr.DR();break;
+                    case"</dr>":defaultColorAction();break;
                     case"<g>":Clr.G();break;
                     case"</g>":defaultColorAction();break;
                     case"<lg>":Clr.LG();break;
                     case"</lg>":defaultColorAction();break;
+                    case"<dgr>":Clr.DG();break;
+                    case"</dgr>":defaultColorAction();break;
                     case"<b>":Clr.B();break;
                     case"</b>":defaultColorAction();break;
                     case"<lb>":Clr.LB();break;
                     case"</lb>":defaultColorAction();break;
+                    case"<db>":Clr.DB();break;
+                    case"</db>":defaultColorAction();break;
                     case"<y>":Clr.Y();break;
                     case"</y>":defaultColorAction();break;
+                    case"<dy>":Clr.DY();break;
+                    case"</dy>":defaultColorAction();break;
+                    case"<ly>":Clr.LY();break;
+                    case"</ly>":defaultColorAction();break;
                     case"<w>":Clr.W();break;
                     case"</w>":defaultColorAction();break;
                     case"<p>":Clr.P();break;
                     case"</p>":defaultColorAction();break;
-                    case"<db>":Clr.DB();break;
-                    case"</db>":defaultColorAction();break;
+                    case"<dp>":Clr.DP();break;
+                    case"</dp>":defaultColorAction();break;
+                    case"<lp>":Clr.LP();break;
+                    case"</lp>":defaultColorAction();break;
+                    case"<pk>":Clr.Pk();break;
+                    case"</pk>":defaultColorAction();break;
+                    case"<dpk>":Clr.DPk();break;
+                    case"</dpk>":defaultColorAction();break;
                     case"<gr>":Clr.Gr();break;
                     case "</gr>":defaultColorAction();break;
                     case "<lgr>":Clr.LGr();break;
                     case"</lgr>":defaultColorAction();break;
                     case"<o>":Clr.O();break;
                     case"</o>":defaultColorAction();break;
+                    case"<do>":Clr.DO();break;
+                    case"</do>":defaultColorAction();break;
+
                     
                     case "*":
                         isAsteriskYellow = !isAsteriskYellow;

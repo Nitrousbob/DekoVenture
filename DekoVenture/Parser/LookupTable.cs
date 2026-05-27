@@ -1,4 +1,4 @@
-﻿//adding a command is easy, just add an entry in the lookup table and make sure the method exists in Command.cs.
+﻿﻿//adding a command is easy, just add an entry in the lookup table and make sure the method exists in Command.cs.
 //The method signature should be void MethodName(List<Token> tokens, ComContext context) and the method should
 //be public.  The command name is the string key in the lookup table, and the method is the value.
 //The command name can be whatever you want, but it should be something that makes sense for the action it performs.
@@ -23,18 +23,23 @@ namespace DekoVenture
             Add("hit", c.Attack);
             Add("look", c.Look);
             Add("help", c.Help);
+            Add("h", c.Help);
             Add("exit", c.Exit);
             Add("quit", c.Exit);
             Add("bye", c.Exit);
             Add("leave", c.Exit);
             Add("run", c.Exit);
             Add("flee", c.Exit);
+            Add("x", c.Exit);
             Add("laugh", c.Laugh);
             Add("flirt", c.Flirt);
             Add("fart", c.Fart);
             Add("give", c.Give);
             Add("inventory", c.Inventory);
             Add("i", c.Inventory);
+            Add("map", c.Map);
+            Add("m", c.Map);
+            Add("wait", c.Wait);
         }
     }
 }

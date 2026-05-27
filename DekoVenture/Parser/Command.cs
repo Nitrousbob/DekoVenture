@@ -217,5 +217,24 @@
         {
             c.Player.ShowInventory();
         }
+
+        public void Map(List<Token> tokens, ComContext c)
+        {
+            if (c.Zone != null)
+            {
+                Map displayMap = new Map(c.Zone);
+                MapDisplay.Show(displayMap);
+                TakeInput.GetString("\nPress Enter to continue...");
+            }
+            else
+            {
+                UI.ShowError("You cannot view the map right now.");
+            }
+        }
+
+        public void Wait(List<Token> tokens, ComContext c)
+        {
+            UI.Narrate("You stand quietly, watching the area.");
+        }
     }
 }

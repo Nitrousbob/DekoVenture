@@ -57,6 +57,7 @@ namespace DekoVenture
         //Dark Gray
         public static void DGr() => Clr.Rgb(100, 100, 100);
         public static void DGr(string message) => RgbWrite(100, 100, 100, message);
+        //Light Gray
         public static void LGr() => Clr.Rgb(200, 200, 200);
         public static void LGr(string message) => RgbWrite(200, 200, 200, message);
         //Light Green
@@ -77,16 +78,22 @@ namespace DekoVenture
         //DarkBlue
         public static void DB() => Clr.Rgb(48, 52, 255);
         public static void DB(string message) => RgbWrite(48, 52, 255, message);
+        //Light Purple
         public static void LP() => Clr.Rgb(220, 50, 235);
         public static void LP(string message) => RgbWrite(220, 50, 235, message);
+        //Purple
         public static void P() => Rgb(167, 27, 228);
         public static void P(string message) => RgbWrite(167, 27, 228, message);
+        //Dark Purple
         public static void DP() => Rgb(103, 17, 140);
         public static void DP(string message) => RgbWrite(103, 17, 140, message);
+        //Pink
         public static void Pk() => Rgb(255, 118, 198);
         public static void Pk(string message) => RgbWrite(255, 118, 198, message);
+        //Dark Pink
         public static void DPk() => Rgb(194, 0, 113);
         public static void DPk(string message) => RgbWrite(194, 0, 113, message);
+
         public static void RgbWrite(int r, int g, int b, string message)
         {
             if (CurrentMode == ColorMode.Monochrome)
