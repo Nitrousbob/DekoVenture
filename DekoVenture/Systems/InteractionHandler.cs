@@ -95,25 +95,59 @@
             
             while (true)
             {
-                string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
-                if (input == "h" || input == "help")
+                // string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
+                // if (input == "h" || input == "help")
+                // {
+                //     UI.ShowHelp("\n[ e(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp ]");
+                //     return true;
+                // }
+                // if (input == "m" || input == "map")
+                string input = TakeInput.GetString("You selection: ").Trim().ToLower();
+                string [] inputParts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (inputParts.Length == 0) continue;
+                string command = inputParts[0];
+
+                if (command == "h" || command == "help")
                 {
-                    UI.ShowHelp("\n[ e(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp ]");
+                    UI.ShowHelp("\n[E(<W>X)</W>it, (<W>I</W>)nventory, (<W>M</W>))ap, (<W>H</W>)elp <W>inspect #</W>, <W>use #</W>]");
                     return true;
                 }
-                if (input == "m" || input == "map")
+                if (command == "m" || command == "map")
                 {
                     return new MapCommand(zone).Execute();
                 }
-                if (input == "x" || input == "exit")
+                if (command == "x" || command == "exit")
                 {
                     return false; // Signal to exit the game
                 }
-                if (input == "i" || input == "inventory")
+                if (command == "i" || command == "inventory")
                 {
                     return new InventoryCommand(player).Execute();
                 }
 
+                //Handle "verb" + number commands (e.g. inspect 1 or use 2)
+                if (inputParts.Length > 1 && int.TryParse(inputParts[1], out int targetNum))
+                {
+                    if(targetNum >= 1 && targetNum <= targets.Count)
+                    {
+                        var target = targets[targetNum - 1];
+                        if(command == "inspect" || command == "look" || command == "x")
+                        {
+                            if(target is Item i) UI.Narrate($"\n<LB>Inspect:</LB> {i.GetDescription()}\n");
+                            else UI.Narrate($"\nYou look closely at {target.Name}.");                        
+                            return true;
+                        }
+                        if (command == "use")
+                        {
+                            if (target is Item i && i.Use(player))
+                            {
+                                i.Quantity--;
+                                if(i.Quantity <= 0) zone.CurrentLocation.Interactables.Remove(i);
+                            }
+                            return true;
+                        }
+                    }
+                }
                 if (int.TryParse(input, out int choice))
                 {
                     if (choice == waitOption)
@@ -132,11 +166,45 @@
                         }
                         else if (target is Item item)
                         {
-                            UI.AllMenuOption($"You picked up ");
-                            UI.ShowMagnitude($"{item.Quantity}x ");
-                            UI.ShowItem($"{item.Name}.");
+                        //     UI.Narrate($"\nYou approach the <Y>{item.Name}</Y>.");
+                        //     int action = TakeInput.PromptIntInstant("[1] PickUp [2] Use [3] Inspect [4] Cancel\n", 1, 2, 3, 4);
+                        //     if (action == 1)
+                        //     {
+                        //         UI.ShowItem ($"You picked up <P>{item.Quantity}x</P> <Y>{item.Name}</Y>.");
+                        //         var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
+                        //         if (existing != null)
+                        //         {
+                        //             existing.Quantity += item.Quantity;
+                        //         }
+                        //         else
+                        //         {
+                        //             player.Inventory.Add(item);
+                        //         }
 
+                        //         zone.CurrentLocation.Interactables.Remove(item);
+                        //     }
+                            
+                        //     else if (action == 2)
+                        //     {
+                        //         bool wasUsed = item.Use(player);
+                        //         if(wasUsed)
+                        //         {
+                        //             item.Quantity--;
+                        //             if (item.Quantity <= 0)
+                        //             {
+                        //                 zone.CurrentLocation.Interactables.Remove(item);
+                        //             }
+                        //         }
+                        //     }
+                            
+                        //     else if (action == 3)
+                        //     {
+                        //         UI.ShowItem($"\nInspect: {item.GetDescription()}\n");
+                        //     }
 
+                        // }
+                            //Default action: Instant pickup
+                            UI.ShowItem($"You picked up <P>{item.Quantity}x</P> <Y>{item.Name}</Y>.");
                             var existing = player.Inventory.FirstOrDefault(i => i.Name == item.Name && i.isStackable);
                             if (existing != null)
                             {
@@ -146,7 +214,6 @@
                             {
                                 player.Inventory.Add(item);
                             }
-
                             zone.CurrentLocation.Interactables.Remove(item);
                         }
                         else

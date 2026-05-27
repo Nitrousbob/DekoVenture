@@ -45,7 +45,7 @@
         public int Heal(int amount)
         {
             int healed = Vitals.Heal(amount);
-            UI.ShowPlayerAction($"{Name} healed <W>{amount}</W> health."); //removed remaining health, its in the status bar now
+            // UI.ShowPlayerAction($"{Name} healed <W>{amount}</W> health."); // This is now handled by the item that triggers the heal.
             return healed;
         }
         public void BlockInteraction(int turns)

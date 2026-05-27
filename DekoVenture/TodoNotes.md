@@ -42,5 +42,4 @@
 //a containment trap could drop and you could break your way out of it if you are strong enough using the IDestructable, example.
 // items - interactable windows, plants desks portals
 
-
 //try substrings in the tokenizer

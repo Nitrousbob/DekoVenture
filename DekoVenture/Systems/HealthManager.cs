@@ -57,7 +57,32 @@ namespace DekoVenture
 
         public void AddEffect(StatusEffect effect)
         {
-            ActiveEffects.Add(effect);
+            //ActiveEffects.Add(effect);
+            var existing = ActiveEffects.FirstOrDefault(e=> e.Type == effect.Type);
+            if (existing != null)
+            {
+                existing.Duration += effect.Duration;
+                UI.Narrate($"\nThe {effect.Type} effect worsens!");
+            }
+            else
+            {
+                ActiveEffects.Add(effect);
+                switch(effect.Type)
+                {
+                    case EffectType.Poison:
+                    UI.Narrate("\n<G>You feel a sickness spreading.. not sure if that was a good idea.</G>");
+                    break;
+                    case EffectType.Bleeding:
+                    UI.Narrate("\n<R>A wound opens up, and you begin to bleed!</R>");
+                    break;
+                    case EffectType.Blinded:
+                    UI.Narrate("\n<Gr>Your vision goes dark. You can't see anything!</Gr>");
+                    break;
+                    case EffectType.Stunned:
+                    UI.Narrate("\n<Y>You are stunned and disoriented!</Y>");
+                    break;
+                }
+            }
         }
 
         public void CureEffect(EffectType type)

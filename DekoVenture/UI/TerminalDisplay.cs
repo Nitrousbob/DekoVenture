@@ -49,7 +49,7 @@ namespace DekoVenture
         }
         public void ShowItem(string text)
         {
-            Clr.O(text + "\n");
+            WriteWithMarkup(text + "\n", Clr.O);
         }
         public void ShowListNumber(string text)
         {
@@ -68,7 +68,6 @@ namespace DekoVenture
         {
             WriteWithMarkup(text + "\n", Clr.Gr);
         }
-
 
         public void ShowCurrencyItem(string text)
         {
@@ -125,11 +124,12 @@ namespace DekoVenture
         {
             Clr.W(text);
         }
-        public void ShowMagnitude(string text)
+
+        public void ShowStatusEffect(string text)
         {
-            Clr.LB(text);
+            WriteWithMarkup(text, Clr.DGr);  //no space and default Dark grey
         }
-    
+        
         private void WriteWithMarkup(string text, System.Action defaultColorAction)
         {
             if(string.IsNullOrEmpty(text)) return;
@@ -149,8 +149,10 @@ namespace DekoVenture
                     case"</g>":defaultColorAction();break;
                     case"<lg>":Clr.LG();break;
                     case"</lg>":defaultColorAction();break;
-                    case "<b>":Clr.B();break;
+                    case"<b>":Clr.B();break;
                     case"</b>":defaultColorAction();break;
+                    case"<lb>":Clr.LB();break;
+                    case"</lb>":defaultColorAction();break;
                     case"<y>":Clr.Y();break;
                     case"</y>":defaultColorAction();break;
                     case"<w>":Clr.W();break;
@@ -163,6 +165,9 @@ namespace DekoVenture
                     case "</gr>":defaultColorAction();break;
                     case "<lgr>":Clr.LGr();break;
                     case"</lgr>":defaultColorAction();break;
+                    case"<o>":Clr.O();break;
+                    case"</o>":defaultColorAction();break;
+                    
                     case "*":
                         isAsteriskYellow = !isAsteriskYellow;
                         if (isAsteriskYellow) Clr.Y(); else defaultColorAction();

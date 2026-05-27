@@ -23,19 +23,30 @@ namespace DekoVenture
             Clr.DGr("[");
             if (player.Vitals != null && player.Vitals.ActiveEffects.Any())
             {
-                Clr.R("Status");
                 for (int i = 0; i < player.Vitals.ActiveEffects.Count; i++)
                 {
                     var effect = player.Vitals.ActiveEffects[i];
-                    Clr.O($"{effect.Type}({effect.Duration})");
+                    UI.ShowStatusEffect($"{GetStatusDescription(effect)}");
 
                     if (i < player.Vitals.ActiveEffects.Count - 1)
                     {
-                        Clr.DGr(",");
+                        Clr.DGr(" ");
                     }
                 }
             }
             Clr.DGr("]");
+        }
+
+        private string GetStatusDescription(StatusEffect effect)
+        {
+            return effect.Type switch
+            {
+                EffectType.Poison => $"<G>Poison</G>(<G>{effect.Duration}</G>)",
+                EffectType.Bleeding => $"<R>Bleed</R>(<R>{effect.Duration}</R>)",
+                EffectType.Blinded => $"<W>Blind</W>(<W>{effect.Duration}</W>)",
+                EffectType.Stunned => $"<O>Stun</O>(<O>{effect.Duration}</O>)",
+                _ => $"{effect.Type}({effect.Duration})"
+            };
         }
     }
 

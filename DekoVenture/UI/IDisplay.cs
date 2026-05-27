@@ -22,8 +22,7 @@ namespace DekoVenture
         void NarrateLocation(string text);
         void ShowLocationOption(string text);
         void AllMenuOption(string text);
-        void ShowMagnitude(string text);
         void NpcTalkText(string text);
-
+        void ShowStatusEffect(string text);
     }
 }

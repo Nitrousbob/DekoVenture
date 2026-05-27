@@ -94,7 +94,7 @@ namespace DekoVenture
             bool inWorld = true;
             while (inWorld)
             {
-                GameStatusBar.Render(player);
+                //GameStatusBar.Render(player); moved into Zone.Describe so it can render at the exact right moment
                 inWorld = CurrentZone.Describe(player);
                 if (player.Health <= 0)
                 {

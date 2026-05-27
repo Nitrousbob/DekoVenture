@@ -21,14 +21,14 @@ namespace DekoVenture
         public static void NarrateLocation(string text) => Current.NarrateLocation(text);
         public static void ShowTitle() => Current.ShowTitle();
         public static void AllMenuOption(string text) => Current.AllMenuOption(text);
-        public static void ShowMagnitude(string text) => Current.ShowMagnitude(text);
-
+        
         //---Character and Interactions
         public static void ShowPlayerAction(string actionText) => Current.ShowPlayerAction(actionText);
         public static void ShowNpcAction(string actionText) => Current.ShowNpcAction(actionText);
         public static void ShowPlayerInfo(Player player) => Current.ShowPlayerInfo(player);
         public static void ShowInventory(List<(Item item, int count)> items) => Current.ShowInventory(items);
         public static void NpcTalkText(string text) => Current.NpcTalkText(text);
+        public static void ShowStatusEffect(string text) => Current.ShowStatusEffect(text);
 
         //---Generic fallback text, ya know something
         public static void ShowText(string input) => Current.ShowText(input);

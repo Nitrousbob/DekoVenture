@@ -115,18 +115,25 @@ namespace DekoVenture
 
         public bool Describe(Player player)
         {
-            UI.NarrateLocation($"You are at the <W>{CurrentLocation.Name}</W>, ");
+            //UI.NarrateLocation($"You are at the <W>{CurrentLocation.Name}</W>, ");
 
             bool isFirstDescription = describedLocations.Add(CurrentLocation);
             if (!isFirstDescription)
             {
                 string? envMessage = TickTurn(player);  //bring the world alive
+                //Render the status bar After the math but before the rest of the text
+                Game.CurrentGame?.GameStatusBar.Render(player);
+                UI.NarrateLocation($"You are at the <W>{CurrentLocation.Name}</W>,");
                 if (!string.IsNullOrEmpty(envMessage))
                 {
                     UI.Narrate(envMessage);
                 }
             }
-
+            else
+            {
+                UI.NarrateLocation($"You are at the <W>{CurrentLocation.Name}</W>, ");
+            }
+        
             //check for player death during this part of turn tick
             if (player.Health <= 0)
             {

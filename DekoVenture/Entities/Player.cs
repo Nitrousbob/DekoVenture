@@ -17,7 +17,7 @@
             UI.Narrate("I or 0. Back");
             while (true)
             {
-                string input = TakeInput.GetString("Your selection adventurer: ").Trim().ToLower();
+                string input = TakeInput.GetString("Your selection: ").Trim().ToLower();
                 if (input == "0" || input == "i" || input == "inventory" || input == "back")
                 {
                     return;
@@ -26,16 +26,35 @@
                 if (int.TryParse(input, out int choice) && choice > 0 && choice <= displayList.Count)
                 {
                     var selectedItem = displayList[choice - 1].item;
-                    bool wasUsed = selectedItem.Use(this);
+                    // bool wasUsed = selectedItem.Use(this);
 
-                    if (wasUsed)
+                    // if (wasUsed)
+                    // {
+                    //     selectedItem.Quantity--;
+                    //     if (selectedItem.Quantity <= 0)
+                    //     {
+                    //         Inventory.Remove(selectedItem);
+                    //     }
+                    // }
+                    UI.Narrate($"\nSelected: <Y>{selectedItem.Name}</Y>");
+                    int action = TakeInput.PromptIntInstant("[1] Use [2] Inspect [3] Cancel\n", 1,2,3);
+                    if (action == 1)
                     {
-                        selectedItem.Quantity--;
-                        if (selectedItem.Quantity <= 0)
+                        bool wasUsed = selectedItem.Use(this);
+                        if (wasUsed)
                         {
-                            Inventory.Remove(selectedItem);
+                            selectedItem.Quantity--;
+                            if (selectedItem.Quantity <= 0)
+                            {
+                                Inventory.Remove(selectedItem);
+                            }
                         }
                     }
+                    else if (action == 2)
+                    {
+                        UI.ShowItem($"\nInspect: {selectedItem.GetDescription()}\n");
+                    }
+
                     return;
                 }
                 UI.ShowError("Invalid Choice.");
