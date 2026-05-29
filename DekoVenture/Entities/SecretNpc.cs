@@ -34,7 +34,7 @@ namespace DekoVenture
                 bool hasItem = player.Inventory.Any(i => i.Name.Equals(RequiredItemName, StringComparison.OrdinalIgnoreCase));
                 if (hasItem)
                 {
-                    UI.Narrate($"They notice the {RequiredItemName} in your belongings. \"Give me that, and I'll tell you what I know.\"");
+                    UI.Narrate($"They notice the <O>{RequiredItemName}</O> in your belongings. \"Give me that, and I'll tell you what I know.\"");
                 }
                 else
                 {

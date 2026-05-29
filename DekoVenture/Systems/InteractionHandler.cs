@@ -31,11 +31,11 @@
             int waitOption = optionNumber++;  //this adds a wait option to let an npc finish their state before they are ready to interact
             //int exitOption = optionNumber; //  adds the final selection
 
-            UI.Narrate($"{waitOption}.Wait a moment.");
+            UI.Narrate($"{waitOption}. Wait a moment.");
             
             while (true)
             {
-                string input = TakeInput.GetString("You selection: ").Trim().ToLower();
+                string input = TakeInput.GetString("Selection: ").Trim().ToLower();
                 string [] inputParts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (inputParts.Length == 0) continue;
                 string command = inputParts[0];

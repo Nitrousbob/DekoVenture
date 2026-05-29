@@ -26,24 +26,33 @@
                     return;
                 }
 
+                if (input.StartsWith("use "))
+                {
+                    string itemName = input.Substring("use ".Length).Trim();
+                    itemName = TakeInput.CleanItemName(itemName);
+
+                    Item? selectedItem = Inventory.FirstOrDefault(i => 
+                    i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+                    if (selectedItem == null)
+                    {
+                        UI.ShowError("Item not found in inventory.");
+                        continue;
+                    }
+                        UseInventoryItem(selectedItem);
+                        continue;
+                }
+
                 if (int.TryParse(input, out int choice) && choice > 0 && choice <= displayList.Count)
                 {
                     var selectedItem = displayList[choice - 1].item;
                     
                     UI.Narrate($"\nSelected: <Y>{selectedItem.Name}</Y>");
+
                     string actionInput = TakeInput.GetString("1. Use \n2. Inspect \nX. Exit").Trim().ToLower();
                     
                     if (actionInput == "1" || actionInput == "use")
                     {
-                        bool wasUsed = selectedItem.Use(this);
-                        if (wasUsed)
-                        {
-                            selectedItem.Quantity--;
-                            if (selectedItem.Quantity <= 0)
-                            {
-                                Inventory.Remove(selectedItem);
-                            }
-                        }
+                        UseInventoryItem(selectedItem);
                     }
                     else if (actionInput == "2" || actionInput == "inspect" || actionInput == "look")
                     {
@@ -58,6 +67,16 @@
                     continue;
                 }
                 UI.ShowError("Invalid Choice.");
+            }
+        }
+
+        private void UseInventoryItem(Item selectedItem)
+        {
+            bool wasUsed = selectedItem.Use(this);
+            if (wasUsed)
+            {
+                selectedItem.Quantity--;
+                if(selectedItem.Quantity <= 0) Inventory.Remove(selectedItem);
             }
         }
 

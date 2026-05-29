@@ -86,7 +86,7 @@ namespace DekoVenture
                 currentState = GameState.MainMenu;
                 return;
             }
-
+            Console.Clear();
             UI.Narrate("--- Entering Game World ---");
 
             CurrentZone = WorldBuilder.CreateStartingZone(); //create the starting zone and describe it

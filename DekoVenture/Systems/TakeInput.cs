@@ -118,5 +118,18 @@
             return Console.ReadLine() ?? string.Empty;
         }
 
+        public static string CleanItemName(string itemName)
+        {
+            itemName = itemName.Trim();
+            if(itemName.StartsWith("the ", StringComparison.OrdinalIgnoreCase))
+            {
+                itemName = itemName.Substring("the ".Length).Trim();
+            }
+            else if (itemName.StartsWith("teh ", StringComparison.OrdinalIgnoreCase))
+            {
+                itemName = itemName.Substring("teh ".Length).Trim();
+            }
+            return itemName;
+        }
     }
 }
